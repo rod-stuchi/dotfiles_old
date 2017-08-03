@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+   month=$(date +%m) 
+else
+   month=$1
+fi
+
+find /disks/W/Financeiro -regex ".*`printf %d $(date +%Y)`[-._]?`printf %02d $((10#$month))`.*_.pdf" |
+  awk 'BEGIN { 
+    FS = "\\n" 
+    RS = ""
+  };
+  {
+    print "\n"
+    for (i=1; i<=NF; i++) {
+      match($i, /[^\/]+.[^\/]+$/, arr)
+      print "  \033[38;5;10m" arr[0]
+      print "   \033[38;5;238m└── \033[38;5;59m" $i "\033[0m"
+    }
+    print "\n"
+  }' $2

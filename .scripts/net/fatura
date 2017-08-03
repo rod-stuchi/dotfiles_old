@@ -1,0 +1,59 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+   month=$(date +%m) 
+else
+   month=$1  
+fi
+
+__fname=`printf %d $(date +%Y)`.`printf %02d $((10#$month))`.pdf
+_file="/disks/W/Financeiro/Contas de Consumo/NET VIRTUA/fatura/$__fname"
+
+if [ ! -f "$_file" ]; then
+  echo -e "\n No such file: \033[38;5;124m" $_file "\033[0m\n"
+
+else
+  
+  local=$(ls "$_file")
+  echo -e "\n  path: \033[3m\033[38;5;22m" $local "\033[0m"
+
+  pdftotext -f 1 -l 1 -raw "$_file" - |
+    awk 'BEGIN { 
+      FS = "\\n" 
+      RS = ""
+    };
+    {
+      print "\n\033[38;5;10m-------- NET VIRTUA -------- \033[0m\n"
+
+      client = ""; refm = ""; duedate = ""; value = ""; line = ""
+
+      for (i=1; i<=NF; i++) {
+        if (i == 1) {
+        client =   "       CLIENTE: " $i
+        }
+
+        if (match($i, "Mês Referência")) {
+          refm =    "       MÊS REF: " $(i+1)
+        }
+
+        if (match($i, "Vencimento")) {
+          duedate = "    VENCIMENTO: " $(i+1)
+        }
+
+        if (match($i, /^Valor$/)) {
+          value =   "         VALOR: \033[38;5;166m" $(i+1) "\033[0m"
+        }
+
+        if (match($i, /[0-9\-]{13}\s[0-9\-]{13}\s[0-9\-]{13}\s[0-9\-]{13}/)) {
+          sLine = gensub(/\.|\s|\-/, "", "g", $i)
+          line =   "         LINHA: " sLine "\n"
+          system("echo -n \"" sLine "\" | xclip -sel clip")
+        }
+      }
+      print client
+      print refm
+      print duedate
+      print value
+      print line
+    }' $2
+fi

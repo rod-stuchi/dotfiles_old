@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#https://wiki.archlinux.org/index.php/Touchpad_Synaptics
+#ftp://www.x.org/pub/X11R7.5/doc/man/man4/synaptics.4.html
+synclient TouchpadOff=1
+synclient TapButton1=1
+synclient TapButton2=3
+synclient TapButton3=2
+synclient HorizEdgeScroll=1
+synclient VertTwoFingerScroll=1
+synclient FingerLow=10
+synclient FingerHigh=20
+synclient CircularScrolling=1
+synclient CircScrollTrigger=3
+synclient CircScrollDelta=0.2
+synclient PalmDetect=1
+synclient PalmMinWidth=10
+synclient PalmMinZ=90
+synclient CoastingSpeed=10

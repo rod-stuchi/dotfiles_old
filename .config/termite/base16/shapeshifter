@@ -1,0 +1,1 @@
+cat ~/.config/termite/config_base ~/.config/termite/base16/"${0##*/}".config > ~/.config/termite/config

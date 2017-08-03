@@ -1,0 +1,57 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+   month=$(date +%m) 
+else
+   month=$1  
+fi
+
+__fname=Fatura-`printf %d%02d $(date +%Y) $((10#$month))`.pdf
+_file="/disks/W/Financeiro/Cartões/Mastercard/Faturas/$__fname"
+
+if [ ! -f "$_file" ]; then
+  echo -e "\n No such file: \033[38;5;124m" $_file "\033[0m\n"
+
+else
+
+  local=$(ls "$_file")
+  echo -e "\n  path: \033[3m\033[38;5;22m" $local "\033[0m"
+
+  pdftotext -f 1 -l 1 -raw "$_file" - |
+    awk 'BEGIN { 
+      FS = "\\n" 
+      RS = ""
+    };
+    {
+      print "\n\033[38;5;10m------------------------------ CARTÃO SUBMARINO ------------------------------ \033[0m\n"
+      
+      for (i=1; i<=NF; i++) {
+        if (match($i, /[^:]+00000000000000/)) {
+          sLine = gensub(/\.|\s/, "", "g", $i)
+          print "        LINHA:", sLine
+          system("echo -n \"" sLine "\" | xclip -sel clip")
+        }
+
+        if (match($i, "Total desta Fatura ")) {
+          match($(i+1), /(R\$[^\$]+)\sR/, value)
+          print "        VALOR:\033[38;5;166m", value[1], "\033[0m"
+        }
+
+        if (match($i, /(VENCIMENTO\:\s)(.*$)/, duedate)) {
+          print "   VENCIMENTO:", duedate[2], "\n"
+        }
+
+        rg = match($i, /([0-9]{2}\/[0-9]{2}\/[0-9]{4})([^$]+\s)([0-9.,]+$)/, arr)
+        # print rg, "------", arr[2]
+        space = "                                          "
+        if (rg != 0) {
+          if (match(arr[2], "PAGAMENTO NO BANCO")) {
+            printf("          \033[38;5;238m%s %s %s %s\033[0m\n", arr[1], arr[2], substr(space, 0, length(space) - length(arr[2])), arr[3])
+          } else {
+            printf("          %s %s %s %s\n", arr[1], arr[2], substr(space, 0, length(space) - length(arr[2])), arr[3])
+          }
+        }
+      }
+      print "\n"
+    }' $2
+fi

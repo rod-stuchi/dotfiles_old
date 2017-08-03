@@ -1,0 +1,3 @@
+#!/bin/bash
+killall xautolock
+xautolock -time 9 -locker $HOME/.config/i3/i3blocks/lockfull.sh

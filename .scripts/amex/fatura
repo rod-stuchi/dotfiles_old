@@ -1,0 +1,67 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+   month=$(date +%m) 
+else
+   month=$1  
+fi
+
+__fname=`printf %d_%02d $(date +%Y) $((10#$month))`__
+_file="/disks/W/Financeiro/Cartões/American Express/Faturas/"$__fname
+
+if [ ! -f "$_file"*.pdf ]; then
+  echo -e "\n No such file: \033[38;5;124m" $_file "\033[0m\n"
+
+else
+
+  local=$(ls "$_file"*.pdf)
+  echo -e "\n  path: \033[3m\033[38;5;22m" $local "\033[0m"
+
+  pdftotext -raw "$_file"*.pdf - |
+    awk 'BEGIN { 
+      FS = "\\n" 
+      RS = ""
+    };
+    {
+      print "\n\033[38;5;10m------------------------------ CARTÃO AMEX ------------------------------ \033[0m\n"
+      
+      client = ""; refm = ""; duedate = ""; value = ""; line = ""
+      details = "\n";
+
+      for (i=1; i<=NF; i++) {
+        if (match($i, /[^:]+00000000000000/)) {
+          sLine = gensub(/\.|\s/, "", "g", $i)
+          line =   "        LINHA: " sLine
+          system("echo -n \"" sLine "\" | xclip -sel clip")
+        }
+
+        if (match($i, "CPF do Pagador:")) {
+          value =  "        VALOR:\033[38;5;166m " $(i-2) "\033[0m"
+        }
+
+        if (match($i, /^Data do Vencimento:/)) {
+          duedate = "   VENCIMENTO: " $(i+2)
+        }
+
+        if (match($i, "Descrição de Despesas em Moeda Local Valor em R")) {
+          space = "                                                    "
+          space2 = "                  "
+          details = details "          \033[38;5;238m" $(i-1) substr(space2, 0, length(space2) - length($(i-1))) "  >  " $(i-2) substr(space, 0, length(space) - length($(i-2))) $(i-3) "\033[0m\n"
+
+          for (l=i; l<= NF; l++) {
+            if (match($l, /^([0-9.,]+$)/) && match($(l+2), /^[0-9]+\sde\s/)) {
+              VL = $l
+              if (match($(l-1), "Crédito")) VL = "\033[38;5;190m+"$l "\033[0m"
+              details = details "          " $(l+2) substr(space2, 0, length(space2) - length($(l+2))) "  >  " $(l+1) substr(space, 0, length(space) - length($(l+1))) VL "\n"
+            }
+          }
+        }
+      }
+
+      print line
+      print value
+      print duedate
+      print details
+      print "\n"
+    }' $2
+fi

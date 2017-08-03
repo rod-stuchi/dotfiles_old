@@ -1,0 +1,68 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+   month=$(date +%m) 
+else
+   month=$1  
+fi
+
+__fname=fatura.`printf %d.%02d $(date +%Y) $((10#$month))`.pdf
+_file="/disks/W/Financeiro/Cartões/Nubank/faturas/$__fname"
+
+if [ ! -f "$_file" ]; then
+  echo -e "\n No such file: \033[38;5;124m" $_file "\033[0m\n"
+
+else
+  
+  local=$(ls "$_file")
+  echo -e "\n  path: \033[3m\033[38;5;22m" $local "\033[0m"
+
+  pdftotext -raw "$_file" - |
+  awk 'BEGIN {
+    FS = "\\n"
+    RS = ""
+  };
+  {
+  print "\n\033[38;5;10m---------------------------------- NUBANK ---------------------------------- \033[0m\n"
+
+  line = ""; value = ""; total = ""; duedate = ""; details = "";
+
+  for (i=1; i<=NF; i++) {
+    if (match($i, "EVITE PROBLEMAS COM SEU PAGAMENTO")) {
+      sLine = gensub(/\.|\s+|\t|\n/, "", "g", $(i-1))
+      line = "        LINHA: " sLine
+      system("echo -n \"" sLine "\" | xclip -sel clip")
+    }
+
+    if (match($i, ", no valor")) {
+      match($(i+1), /de (R\$[^\$]+)$/, val)
+      value = "        VALOR:\033[38;5;166m " val[1] "\033[0m"
+    }
+
+    if (match($i, /Total de compras, (.*\w{3}) /, tt)) {
+      total = "      COMPRAS: " tt[1]
+    }
+
+    if (match($i, /(VENCIMENTO\s)(.*$)/, ddt)) {
+      duedate = "   VENCIMENTO: " ddt[2] "\n"
+    }
+
+    space = "                                         "
+
+    if (match($i, /([0-9]{2}\s\w{3}\s)(.*\s)(.*[.|,][0-9]+$)/, VL)) {
+      if (match($i, /Pagamento em .. .../)) {
+        details = details "          \033[38;5;238m" VL[1] "  " VL[2] "  " substr(space, 0, length(space) - length(VL[2])) VL[3] "\033[0m\n"
+      } else {
+        details = details "          " VL[1] "  " VL[2] "  " substr(space, 0, length(space) - length(VL[2])) VL[3] "\n"
+      }
+    }
+  }
+
+  print line
+  print value
+  print total
+  print duedate
+  print details
+
+  }' $2
+fi
