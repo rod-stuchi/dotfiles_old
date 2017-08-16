@@ -49,7 +49,7 @@ set $alt Mod1
   bindsym $mod+Shift+q kill
 
 # start rofi (a program launcher)
-  bindsym $mod+d exec "rofi -modi drun,run,window -show run -config ~/.config/rofi.conf"
+  bindsym $mod+d exec "rofi -modi drun,run,window -show run -config ~/.config/rofi/config"
 
 # change focus
   bindsym $mod+h focus left
@@ -244,7 +244,9 @@ client.placeholder      $base00 $base00 $base05 $base00 $base00
 client.background       $base07
 # lock screen
   #bindsym $mod+Shift+x exec $HOME/.config/i3/lockfull
-  bindsym $mod+Shift+x exec --no-startup-id xautolock -locknow
+  #bindsym $mod+Shift+x exec --no-startup-id xautolock -locknow
+  #bindsym $mod+Shift+x exec i3lock -c 000000 -n -p win -f
+  bindsym $mod+Shift+x exec $HOME/.config/i3/i3blocks/lockfull.sh
 
 # sticky floating window to show in all workspaces
   bindsym $mod+shift+a sticky toggle

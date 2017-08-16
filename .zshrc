@@ -1,5 +1,8 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export PATH="$PATH:/opt/yarn/bin"
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/platform-tools
 export PATH="$PATH:$HOME/.config/yarn/global/node_modules/.bin"
 export MANPAGER="nvim -c 'set ft=man' -"
 export EDITOR=nvim
@@ -39,14 +42,14 @@ fi
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='mvim'
+  export EDITOR='nvim'
 fi
 
 alias vim="nvim"
 alias ld="ls -d */"
 alias lld="ls -ld */"
 alias cd..="cd .."
-alias config="/usr/bin/git --git-dir=/disks/1TB/Git/rods_config.git --work-tree=$HOME"
+alias config="/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 alias rodsdisk="df -h -l -t ext4 -t fuseblk"
 alias rodsvideo-720p="youtube-dl -f 'bestvideo[height<=720]+bestaudio/best[height<=720]' -o '%(title)s.%(ext)s' "
 alias rodsMemo='function _memo(){smem -t -k -c pss -P "$1" | tail -n 1}; _memo'
