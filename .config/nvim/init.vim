@@ -152,25 +152,6 @@
 
   let g:deoplete#enable_at_startup = 1
   let g:deoplete#enable_refresh_always = 1
-  
-  "Select buffer
-  function! s:buflist()
-    redir => ls
-    silent ls
-    redir END
-    return split(ls, '\n')
-  endfunction
-
-  function! s:bufopen(e)
-    execute 'buffer' matchstr(a:e, '^[ 0-9]*')
-  endfunction
-
-  nnoremap <silent> <Leader><Enter> :call fzf#run({
-  \   'source':  reverse(<sid>buflist()),
-  \   'sink':    function('<sid>bufopen'),
-  \   'options': '+m',
-  \   'down':    len(<sid>buflist()) + 2
-  \ })<CR>
 
   "Narrow ag results within vim
   function! s:ag_to_qf(line)
@@ -209,6 +190,19 @@
   \ 'down':    '50%'
   \ })
 
+  command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
+
+
+  command! -nargs=* OpenTabs call fzf#run({'sink': 'tabedit', 'options': '--multi --reverse'})
+
+  nnoremap <silent> <Leader>t :Windows<CR>
+  nnoremap <silent> <Leader>b :Buffers<CR>
+
 "-------------------------COLOR SCHEME--------------------
 "---------------------------------------------------------
   syntax enable
@@ -229,5 +223,6 @@
   noremap  <Right>    <Nop>
   xmap     ga         <Plug>(EasyAlign)
   nnoremap <leader>zz :call VCenterCursor()<CR>
+  imap     <c-x><c-j> <plug>(fzf-complete-file-ag)
   "nnoremap j       jzz
   "nnoremap k       kzz
