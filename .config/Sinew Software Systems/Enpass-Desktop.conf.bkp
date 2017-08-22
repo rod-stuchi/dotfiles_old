@@ -12,7 +12,7 @@ IsFolderDirty=false
 LastModifiedTimeOfFolderDB=1502876508
 LastSelectedIdentifier=allItems
 LastSelectedLanguage=default
-LastSyncAttemptedAt="Tuesday, August 22, 2017 7:29:11 AM -03"
+LastSyncAttemptedAt="Thursday, August 17, 2017 8:35:06 AM -03"
 LastSyncDoneDateTime="Thursday, August 17, 2017 7:45:05 AM -03"
 QUICK_UNLOCK_ENABLED=false
 RunInSystemTray=true
@@ -61,5 +61,5 @@ lastModifiedAt=0
 [SinewKitSettings]
 DontShowReview=false
 TrackingDate=1502727332
-UsageCount=12
+UsageCount=11
 VersionShown=
