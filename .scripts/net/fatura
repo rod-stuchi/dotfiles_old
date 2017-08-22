@@ -1,9 +1,9 @@
 #!/bin/bash
 
 if [ -z "$1" ]; then
-   month=$(date +%m) 
+   month=$(date +%m)
 else
-   month=$1  
+   month=$1
 fi
 
 __fname=`printf %d $(date +%Y)`.`printf %02d $((10#$month))`.pdf
@@ -13,13 +13,13 @@ if [ ! -f "$_file" ]; then
   echo -e "\n No such file: \033[38;5;124m" $_file "\033[0m\n"
 
 else
-  
+
   local=$(ls "$_file")
   echo -e "\n  path: \033[3m\033[38;5;22m" $local "\033[0m"
 
   pdftotext -f 1 -l 1 -raw "$_file" - |
-    awk 'BEGIN { 
-      FS = "\\n" 
+    awk 'BEGIN {
+      FS = "\\n"
       RS = ""
     };
     {

@@ -1,9 +1,9 @@
 #!/bin/bash
 
 if [ -z "$1" ]; then
-   month=$(date +%m) 
+   month=$(date +%m)
 else
-   month=$1  
+   month=$1
 fi
 
 __fname=Fatura-`printf %d%02d $(date +%Y) $((10#$month))`.pdf
@@ -18,13 +18,13 @@ else
   echo -e "\n  path: \033[3m\033[38;5;22m" $local "\033[0m"
 
   pdftotext -f 1 -l 1 -raw "$_file" - |
-    awk 'BEGIN { 
-      FS = "\\n" 
+    awk 'BEGIN {
+      FS = "\\n"
       RS = ""
     };
     {
       print "\n\033[38;5;10m------------------------------ CARTÃO SUBMARINO ------------------------------ \033[0m\n"
-      
+
       for (i=1; i<=NF; i++) {
         if (match($i, /[^:]+00000000000000/)) {
           sLine = gensub(/\.|\s/, "", "g", $i)

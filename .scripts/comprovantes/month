@@ -1,14 +1,14 @@
 #!/bin/bash
 
 if [ -z "$1" ]; then
-   month=$(date +%m) 
+   month=$(date +%m)
 else
    month=$1
 fi
 
 find /disks/W/Financeiro -regex ".*`printf %d $(date +%Y)`[-._]?`printf %02d $((10#$month))`.*_.pdf" |
-  awk 'BEGIN { 
-    FS = "\\n" 
+  awk 'BEGIN {
+    FS = "\\n"
     RS = ""
   };
   {

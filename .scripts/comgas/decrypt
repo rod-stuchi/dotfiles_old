@@ -1,9 +1,9 @@
 #!/bin/bash
 
 if [ -z "$1" ]; then
-   month=$(date +%m) 
+   month=$(date +%m)
 else
-   month=$1  
+   month=$1
 fi
 
 __fname=`printf %d $(date +%Y)`.`printf %02d $((10#$month))`.pdf

@@ -1,8 +1,8 @@
 #!/bin/bash
 
 find /disks/W/Financeiro -regex ".*$(date +%Y).*_\.pdf" |
-  awk 'BEGIN { 
-    FS = "\\n" 
+  awk 'BEGIN {
+    FS = "\\n"
     RS = ""
   };
   {
