@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <VeraCrypt>
 	<favorites>
-		<volume mountpoint="/disks/Sec" readonly="0" slotnumber="1" system="0">/home/rods/.vera/vera_file_500</volume>
+		<volume mountpoint="/disks/Sec" readonly="0" slotnumber="1" system="0">/home/rods/.scripts/react-fiber.mp4</volume>
 	</favorites>
 </VeraCrypt>

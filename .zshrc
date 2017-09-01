@@ -98,7 +98,7 @@ rodsColor () {
 }
 
 weather () {
-  WEATHER_URL="http://api.openweathermap.org/data/2.5/find?q=Barueri&APPID=3fa9fa72d3d8db1a0bf6b9383239faa7&units=metric"
+  WEATHER_URL="http://api.openweathermap.org/data/2.5/find?q=Jabaquara&APPID=3fa9fa72d3d8db1a0bf6b9383239faa7&units=metric"
   wget -qO- "${WEATHER_URL}" | python -m json.tool
 }
 

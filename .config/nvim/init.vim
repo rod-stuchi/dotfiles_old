@@ -41,7 +41,7 @@
   "set guifont=Source\ Code\ Pro\ for\ Powerline
 
 " enable mouse
-  "set mouse=a
+  set mouse=a
 
 " Set the title of the iterm tab
   set title
@@ -101,6 +101,7 @@
       let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$|node_modules'
       let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
     endif
+  Plug 'airblade/vim-gitgutter'
   Plug 'easymotion/vim-easymotion'
   Plug 'elixir-lang/vim-elixir'
   Plug 'fleischie/vim-styled-components'
@@ -108,24 +109,37 @@
   Plug 'junegunn/fzf.vim'
   Plug 'junegunn/vim-easy-align'
   Plug 'justinj/vim-react-snippets'
+  Plug 'ludovicchabant/vim-gutentags'
+  Plug 'majutsushi/tagbar'
   Plug 'mattn/emmet-vim'
   Plug 'maxmellon/vim-jsx-pretty'
-  Plug 'airblade/vim-gitgutter'
   Plug 'pangloss/vim-javascript'
-  Plug 'tpope/vim-fugitive'
   Plug 'ryanoasis/vim-devicons'
   Plug 'scrooloose/nerdtree' ", { 'on': 'NERDTreeToggle' }
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'slashmili/alchemist.vim'
   Plug 'tomasr/molokai'
+  Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-surround'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
   Plug 'vim-scripts/Mark--Karkat'
+  Plug 'vim-syntastic/syntastic'
   call plug#end()
 
 "-------------------------FUNCTIONS-----------------------
 "---------------------------------------------------------
+  set statusline+=%#warningmsg#
+  set statusline+=%{SyntasticStatuslineFlag()}
+  set statusline+=%*
+  let g:syntastic_always_populate_loc_list = 1
+  "let g:syntastic_auto_loc_list = 1
+  "let g:syntastic_check_on_open = 0
+  "let g:syntastic_check_on_wq = 0
+  let g:syntastic_javascript_checkers = ['eslint']
+  let g:syntastic_javascript_eslint_exe = 'npx eslint .'
+
+
   set scrolloff=0
   if !exists('*VCenterCursor')
     augroup VCenterCursor
@@ -197,6 +211,18 @@
   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
   \   <bang>0)
 
+  "Toggle Mouse
+  function! ToggleMouse()
+    " check if mouse is enabled
+    if &mouse == 'a'
+        " disable mouse
+        set mouse=
+    else
+        " enable mouse everywhere
+        set mouse=a
+    endif
+  endfunc
+
 
   command! -nargs=* OpenTabs call fzf#run({'sink': 'tabedit', 'options': '--multi --reverse'})
 
@@ -224,5 +250,9 @@
   xmap     ga         <Plug>(EasyAlign)
   nnoremap <leader>zz :call VCenterCursor()<CR>
   imap     <c-x><c-j> <plug>(fzf-complete-file-ag)
+  nmap     <F8>       :TagbarToggle<CR>
+  nmap     <F9>       :call ToggleMouse()<CR>
+  "Remove all trailing whitespace by pressing F5
+  nnoremap <F5>       :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
   "nnoremap j       jzz
   "nnoremap k       kzz

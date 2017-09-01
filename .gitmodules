@@ -13,3 +13,12 @@
 [submodule ".config/termite_git"]
 	path = .config/termite_git
 	url = https://github.com/thestinger/termite.git
+[submodule ".oh-my-zsh"]
+	path = .oh-my-zsh
+	url = https://github.com/robbyrussell/oh-my-zsh.git
+[submodule ".config/ranger_git"]
+	path = .config/ranger_git
+	url = https://github.com/ranger/ranger.git
+[submodule ".config/neovim_git"]
+	path = .config/neovim_git
+	url = https://github.com/neovim/neovim.git
