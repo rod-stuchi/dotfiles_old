@@ -31,7 +31,7 @@
 " MOAR colors
   set t_Co=256
 " Unselect the search result
-  map <Leader><Space> :noh<CR>
+  map <Leader>b :noh<CR>
 " Better buffer handling
   set hidden
 " hightlight cursor position
@@ -78,6 +78,7 @@
 " autocmd BufRead,BufNewFile   *.zshrc setlocal foldmethod=expr foldexpr=getline(v:lnum)=~'^\s*#'
 "   https://vi.stackexchange.com/questions/3512/how-to-fold-comments
   autocmd BufRead,BufNewFile *.zshrc,*.conf setlocal foldmethod=expr fde foldlevel=0
+
 " Makefiles require tabs
   autocmd FileType make setlocal noexpandtab
 
@@ -105,6 +106,7 @@
   Plug 'easymotion/vim-easymotion'
   Plug 'elixir-lang/vim-elixir'
   Plug 'fleischie/vim-styled-components'
+  Plug 'fholgado/minibufexpl.vim'
   Plug 'junegunn/fzf', { 'dir': '~/.config/fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
   Plug 'junegunn/vim-easy-align'
@@ -119,6 +121,7 @@
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'slashmili/alchemist.vim'
   Plug 'tomasr/molokai'
+  "Plug 'townk/vim-autoclose'
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-surround'
   Plug 'vim-airline/vim-airline'
@@ -129,15 +132,15 @@
 
 "-------------------------FUNCTIONS-----------------------
 "---------------------------------------------------------
-  set statusline+=%#warningmsg#
-  set statusline+=%{SyntasticStatuslineFlag()}
-  set statusline+=%*
-  let g:syntastic_always_populate_loc_list = 1
+  "set statusline+=%#warningmsg#
+  "set statusline+=%{SyntasticStatuslineFlag()}
+  "set statusline+=%*
+  "let g:syntastic_always_populate_loc_list = 1
   "let g:syntastic_auto_loc_list = 1
   "let g:syntastic_check_on_open = 0
   "let g:syntastic_check_on_wq = 0
-  let g:syntastic_javascript_checkers = ['eslint']
-  let g:syntastic_javascript_eslint_exe = 'npx eslint .'
+  "let g:syntastic_javascript_checkers = ['eslint']
+  "let g:syntastic_javascript_eslint_exe = 'npx eslint .'
 
 
   set scrolloff=0
@@ -227,7 +230,9 @@
   command! -nargs=* OpenTabs call fzf#run({'sink': 'tabedit', 'options': '--multi --reverse'})
 
   nnoremap <silent> <Leader>t :Windows<CR>
-  nnoremap <silent> <Leader>b :Buffers<CR>
+  nnoremap <silent> <Leader><Space> :Buffers<CR>
+  " [Buffers] Jump to the existing window if possible
+  let g:fzf_buffers_jump = 1
 
 "-------------------------COLOR SCHEME--------------------
 "---------------------------------------------------------
