@@ -1,7 +1,7 @@
 " Activate Syntax Highlight
   syntax enable
 " set default encoding to UTF-8
-  set encoding=utf-8 
+  set encoding=utf-8
 
 " Highlight search results
   set hlsearch
@@ -37,8 +37,15 @@
 " hightlight cursor position
   set cursorline cursorcolumn
 " set font compatible with arline
-  set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11 
+  set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11
   "set guifont=Source\ Code\ Pro\ for\ Powerline
+
+" highlight column after 'textwidth'
+  set colorcolumn=+1
+" highlight three columns after 'textwidth'
+  set colorcolumn=+1,+2,+3
+  highlight ColorColumn ctermbg=darkgrey guibg=darkgrey
+" set colorlcolumn=100
 
 " enable mouse
   set mouse=a
@@ -74,7 +81,7 @@
   set foldmethod=indent foldlevel=3
 " expression to fold '#' comments and empty lines
 "   http://vim.1045645.n5.nabble.com/Hide-comments-td1175338.html
-  set fde=getline(v:lnum)=~'^\\s*#'?1:getline(prevnonblank(v:lnum))=~'^\\s*#'?1:getline(nextnonblank(v:lnum))=~'^\\s*#'?1:0 
+  set fde=getline(v:lnum)=~'^\\s*#'?1:getline(prevnonblank(v:lnum))=~'^\\s*#'?1:getline(nextnonblank(v:lnum))=~'^\\s*#'?1:0
 " autocmd BufRead,BufNewFile   *.zshrc setlocal foldmethod=expr foldexpr=getline(v:lnum)=~'^\s*#'
 "   https://vi.stackexchange.com/questions/3512/how-to-fold-comments
   autocmd BufRead,BufNewFile *.zshrc,*.conf setlocal foldmethod=expr fde foldlevel=0
@@ -97,6 +104,7 @@
 
       " ag is fast enough that CtrlP doesn't need to cache
       let g:ctrlp_use_caching = 0
+      let g:ctrlp_match_window = 'min:4,max:24'
     else
       " Fall back to using git ls-files if Ag is not available
       let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$|node_modules'
