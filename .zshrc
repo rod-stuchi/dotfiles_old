@@ -1,8 +1,14 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export PATH="$PATH:/opt/yarn/bin"
+
+export ANDROID_HOME=/disks/1TB/android-sdk/android-sdk
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
 export PATH="$PATH:$HOME/.config/yarn/global/node_modules/.bin"
 export MANPAGER="nvim -c 'set ft=man' -"
 export EDITOR=nvim
+export REACT_EDITOR=code
 
 # If you don't want to exclude hidden files, use the following command:
 export FZF_DEFAULT_COMMAND='ag --hidden --path-to-ignore ~/.config/ag/agignore -g ""'
@@ -39,7 +45,7 @@ fi
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
 else
-  export EDITOR='mvim'
+  export EDITOR='nvim'
 fi
 
 alias vim="nvim"
@@ -60,6 +66,7 @@ alias rodsSubmarinoDec='~/.scripts/submarino/decrypt'
 alias rodsSubmarinoFatura='~/.scripts/submarino/fatura'
 alias rodsAmexFatura='~/.scripts/amex/fatura'
 alias rodsNubankFatura='~/.scripts/nubank/fatura'
+
 alias rodsmpd='mpd -v .config/mpd/mpd.conf'
 
 # functions

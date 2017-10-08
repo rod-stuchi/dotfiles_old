@@ -1,7 +1,7 @@
 " Activate Syntax Highlight
   syntax enable
 " set default encoding to UTF-8
-  set encoding=utf-8 
+  set encoding=utf-8
 
 " Highlight search results
   set hlsearch
@@ -37,10 +37,10 @@
 " hightlight cursor position
   set cursorline cursorcolumn
 " set font compatible with arline
-  set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11 
+  set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11
 
 " enable mouse
-  "set mouse=a
+  set mouse=a
 
 " Set the title of the iterm tab
   set title
@@ -73,7 +73,7 @@
   set foldmethod=indent foldlevel=3
 " expression to fold '#' comments and empty lines
 "   http://vim.1045645.n5.nabble.com/Hide-comments-td1175338.html
-  set fde=getline(v:lnum)=~'^\\s*#'?1:getline(prevnonblank(v:lnum))=~'^\\s*#'?1:getline(nextnonblank(v:lnum))=~'^\\s*#'?1:0 
+  set fde=getline(v:lnum)=~'^\\s*#'?1:getline(prevnonblank(v:lnum))=~'^\\s*#'?1:getline(nextnonblank(v:lnum))=~'^\\s*#'?1:0
 " autocmd BufRead,BufNewFile   *.zshrc setlocal foldmethod=expr foldexpr=getline(v:lnum)=~'^\s*#'
 "   https://vi.stackexchange.com/questions/3512/how-to-fold-comments
   autocmd BufRead,BufNewFile *.zshrc,*.conf setlocal foldmethod=expr fde foldlevel=0
@@ -107,6 +107,8 @@
   Plug 'junegunn/fzf.vim'
   Plug 'junegunn/vim-easy-align'
   Plug 'justinj/vim-react-snippets'
+  Plug 'ludovicchabant/vim-gutentags'
+  Plug 'majutsushi/tagbar'
   Plug 'mattn/emmet-vim'
   Plug 'maxmellon/vim-jsx-pretty'
   Plug 'pangloss/vim-javascript'
@@ -123,6 +125,7 @@
 
 "-------------------------FUNCTIONS-----------------------
 "---------------------------------------------------------
+  set statusline+=%{gutentags#statusline()}
   set scrolloff=0
   if !exists('*VCenterCursor')
     augroup VCenterCursor
@@ -170,5 +173,6 @@
   noremap  <Right>    <Nop>
   xmap     ga         <Plug>(EasyAlign)
   nnoremap <leader>zz :call VCenterCursor()<CR>
+  nmap     <F8>       :TagbarToggle<CR>
   "nnoremap j       jzz
   "nnoremap k       kzz

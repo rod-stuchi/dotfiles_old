@@ -1,0 +1,15 @@
+[user]
+	name = Rodrigo Stuchi
+	email = rod.stuchi@gmail.com
+
+[core]
+	editor = nvim
+
+[diff]
+	tool = kdiff3
+
+[log]
+	date = relative
+
+[format]
+	pretty = format:%C(auto,yellow)%h%C(auto,magenta)% G? %C(auto,blue)%>(12,trunc)%ad %C(auto,green)%<(16,trunc)%aN%C(auto,reset)%s%C(auto,red)% gD% D
