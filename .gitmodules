@@ -22,3 +22,9 @@
 [submodule ".config/neovim_git"]
 	path = .config/neovim_git
 	url = https://github.com/neovim/neovim.git
+[submodule ".config/package-query_git"]
+	path = .config/package-query_git
+	url = https://aur.archlinux.org/package-query.git
+[submodule ".config/yaourt_git"]
+	path = .config/yaourt_git
+	url = https://aur.archlinux.org/yaourt.git
