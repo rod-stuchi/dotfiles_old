@@ -1,5 +1,5 @@
 " Ignore turds left behind by Mercurial.
-let g:NERDTreeIgnore=['\.orig', 'node_modules']
+let g:NERDTreeIgnore=['\.orig', 'node_modules', 'dist', 'apidoc']
 
 " The default of 31 is just a little too narrow.
 let g:NERDTreeWinSize=40
