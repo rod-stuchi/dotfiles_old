@@ -114,10 +114,11 @@
       let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
     endif
   Plug 'airblade/vim-gitgutter'
+    " increase signs, default was 500
+    let g:gitgutter_max_signs = 1500
   Plug 'easymotion/vim-easymotion'
   Plug 'elixir-lang/vim-elixir'
   Plug 'fleischie/vim-styled-components'
-  Plug 'fholgado/minibufexpl.vim'
   Plug 'junegunn/fzf', { 'dir': '~/.config/fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
   Plug 'junegunn/vim-easy-align'
