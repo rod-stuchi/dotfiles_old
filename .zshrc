@@ -12,6 +12,7 @@ export FZF_DEFAULT_COMMAND='ag --hidden --path-to-ignore ~/.config/ag/agignore -
 
 # To apply the command to CTRL-T as well
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_T_OPTS="--bind 'ctrl-a:select-all+accept'"
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
