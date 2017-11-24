@@ -53,6 +53,7 @@ alias ld="ls -d */"
 alias lld="ls -ld */"
 alias cd..="cd .."
 alias config="/usr/bin/git --git-dir=/disks/1TB/Git/rods_config.git --work-tree=$HOME"
+alias gitroot="/usr/bin/git --git-dir=/home/rods/.gitroot --work-tree=/"
 alias rodsdisk="df -h -l -t ext4 -t fuseblk"
 alias rodsvideo-720p="youtube-dl -f 'bestvideo[height<=720]+bestaudio/best[height<=720]' -o '%(title)s.%(ext)s' "
 alias rodsMemo='function _memo(){smem -t -k -c pss -P "$1" | tail -n 1}; _memo'
@@ -102,7 +103,7 @@ rodsColor () {
 }
 
 weather () {
-  WEATHER_URL="http://api.openweathermap.org/data/2.5/find?q=jabaquara&APPID=3fa9fa72d3d8db1a0bf6b9383239faa7&units=metric"
+  WEATHER_URL="http://api.openweathermap.org/data/2.5/find?q=liberdade,br&APPID=3fa9fa72d3d8db1a0bf6b9383239faa7&units=metric"
   wget -qO- "${WEATHER_URL}" | python -m json.tool
 }
 

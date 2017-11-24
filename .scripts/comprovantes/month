@@ -6,7 +6,7 @@ else
    month=$1
 fi
 
-find /disks/W/Financeiro -regex ".*`printf %d $(date +%Y)`[-._]?`printf %02d $((10#$month))`.*_.pdf" |
+find /disks/W/Financeiro -regex ".*`printf %d $(date +%Y)`[-._]?`printf %02d $((10#$month))`.*_\.\(pdf\|html\)" |
   awk 'BEGIN { 
     FS = "\\n" 
     RS = ""

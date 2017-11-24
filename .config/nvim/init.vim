@@ -45,7 +45,7 @@
 " highlight three columns after 'textwidth'
   set colorcolumn=+1,+2,+3
   highlight ColorColumn ctermbg=darkgrey guibg=darkgrey
-" set colorlcolumn=100
+  set colorcolumn=100
 
 " enable mouse
   set mouse=a
@@ -57,6 +57,8 @@
   autocmd FileType git set nofoldenable
 
   set inccommand=split
+
+  let g:python3_host_prog="/usr/bin/python3"
 
 " Show invisible characters:
 "   Tabs and trailing whitespace
@@ -86,6 +88,10 @@
 "   https://vi.stackexchange.com/questions/3512/how-to-fold-comments
   autocmd BufRead,BufNewFile *.zshrc,*.conf setlocal foldmethod=expr fde foldlevel=0
 
+" save cursor/scroll position when switching between buffers
+  autocmd! BufWinLeave * let b:winview = winsaveview()
+  autocmd! BufWinEnter * if exists('b:winview') | call winrestview(b:winview) | unlet b:winview
+
 " Makefiles require tabs
   autocmd FileType make setlocal noexpandtab
 
@@ -100,14 +106,14 @@
     if executable('ag')
       " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
       let g:ctrlp_user_command =
-        \ 'ag %s --files-with-matches -g "" --ignore "\.git$\|\.hg$\|\.svn$|node_modules"'
+        \ 'ag %s --files-with-matches -g "" --ignore "\.git$\|\.hg$\|\.svn$|node_modules|docs$"'
 
       " ag is fast enough that CtrlP doesn't need to cache
       let g:ctrlp_use_caching = 0
       let g:ctrlp_match_window = 'min:4,max:24'
     else
       " Fall back to using git ls-files if Ag is not available
-      let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$|node_modules'
+      let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$|node_modules|docs$'
       let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
     endif
   Plug 'airblade/vim-gitgutter'
