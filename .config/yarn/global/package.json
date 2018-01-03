@@ -9,6 +9,7 @@
     "nodemon": "^1.12.1",
     "npx": "^9.7.1",
     "nyc": "^11.2.1",
-    "react-native-cli": "^2.0.1"
+    "react-native-cli": "^2.0.1",
+    "vue-cli": "^2.9.2"
   }
 }

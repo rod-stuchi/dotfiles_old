@@ -1,20 +1,18 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export PATH="$PATH:/opt/yarn/bin"
-
-export ANDROID_HOME=/disks/1TB/android-sdk/android-sdk
+export ANDROID_HOME=$HOME/Android/Sdk
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/platform-tools
-
 export PATH="$PATH:$HOME/.config/yarn/global/node_modules/.bin"
 export MANPAGER="nvim -c 'set ft=man' -"
 export EDITOR=nvim
-export REACT_EDITOR=code
 
 # If you don't want to exclude hidden files, use the following command:
 export FZF_DEFAULT_COMMAND='ag --hidden --path-to-ignore ~/.config/ag/agignore -g ""'
 
 # To apply the command to CTRL-T as well
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_CTRL_T_OPTS="--bind 'ctrl-a:select-all+accept'"
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
@@ -67,6 +65,8 @@ alias rodsSubmarinoDec='~/.scripts/submarino/decrypt'
 alias rodsSubmarinoFatura='~/.scripts/submarino/fatura'
 alias rodsAmexFatura='~/.scripts/amex/fatura'
 alias rodsNubankFatura='~/.scripts/nubank/fatura'
+alias rodsDisableWebCam='sudo modprobe -r uvcvideo'
+alias rodsEnableWebCam='sudo modprobe -a uvcvideo'
 
 alias rodsmpd='mpd -v .config/mpd/mpd.conf'
 
@@ -75,6 +75,13 @@ alias rodsmpd='mpd -v .config/mpd/mpd.conf'
 bin2dec(){ echo "$((2#$1))" }
 
 copy(){ echo -n "$1" | xclip -selection clipboard }
+
+rodsTrueColor() { 
+  # https://gist.github.com/XVilka/8346728
+  curl -s https://raw.githubusercontent.com/JohnMorales/dotfiles/master/colors/24-bit-color.sh | bash 
+}
+
+rodsListWifi() {  iwlist wlp3s0 scan | ag "ESSID|Encryp|Quality" | xargs -L2 | sort -rk 1 }
 
 rodsPacRequiredBy() {
   pacman -Qi "$1" | awk -F'[:<=>]' '/^Required/ {print $2}' | xargs -n1 | sort -u

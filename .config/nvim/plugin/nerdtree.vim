@@ -31,4 +31,14 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 " relative numbers in nerdtree
 autocmd FileType nerdtree setlocal relativenumber
 
+function! ToggleNERDTreeFind()
+  if g:NERDTree.IsOpen()
+    execute ':NERDTreeClose'
+  else
+    execute ':NERDTreeFind'
+  endif
+endfunction
+
+nnoremap <leader>f :call ToggleNERDTreeFind()<CR>
+
 " call defer#packadd('nerdtree', 'NERD_tree.vim')
