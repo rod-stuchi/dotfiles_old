@@ -7,7 +7,9 @@
     "insect": "^5.0.0",
     "js.inspect": "^0.0.13",
     "nodemon": "^1.12.1",
+    "pm2": "^2.9.1",
     "react-native-cli": "^2.0.1",
-    "reload": "^2.2.1"
+    "reload": "^2.2.1",
+    "tldr": "^3.1.1"
   }
 }

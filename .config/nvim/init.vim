@@ -250,7 +250,7 @@
 "---------------------------------------------------------
   syntax enable
   let base16colorspace=256
-  colorscheme base16-summerfruit-dark
+  colorscheme base16-monokai
   highlight Normal ctermbg=none
   highlight NonText ctermbg=none
 

@@ -72,6 +72,8 @@ bin2dec(){ echo "$((2#$1))" }
 
 copy(){ echo -n "$1" | xclip -selection clipboard }
 
+rodsListWiFi() { sudo iwlist wlp2s0 scan | ag "ESSID|Quality|Encry" | xargs -L2 | sort -rk 1 }
+
 rodsPacRequiredBy() {
   pacman -Qi "$1" | awk -F'[:<=>]' '/^Required/ {print $2}' | xargs -n1 | sort -u
 }

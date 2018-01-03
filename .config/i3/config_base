@@ -31,7 +31,7 @@ set $alt Mod1
   exec_always $HOME/.config/i3/script/touchpad
 
 # Timeout lock screen
-  exec $HOME/.config/i3/script/autolock
+#  exec $HOME/.config/i3/script/autolock
 
 # keyboard layout en-us international no-deadkeys
 #  exec "setxkbmap -layout us -variant intl"

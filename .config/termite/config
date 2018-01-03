@@ -13,50 +13,50 @@ scrollback_lines = 10000
 # font        = Source Code Pro for Powerline 9
 
 [colors]
-# Base16 Summerfruit Dark
-# Author: Christopher Corley (http://christop.club/)
+# Base16 Monokai
+# Author: Wimer Hazenberg (http://www.monokai.nl)
 
-foreground      = #D0D0D0
-foreground_bold = #E0E0E0
-#cursor          = #E0E0E0
-background      = rgba(21,21,21,0.93)
+foreground      = #f8f8f2
+foreground_bold = #f5f4f1
+#cursor          = #f5f4f1
+background      = rgba(39,40,34,0.80)
 
 # 16 color space
 
 # Black, Gray, Silver, White
-color0  = #151515
-color8  = #505050
-color7  = #D0D0D0
-color15 = #FFFFFF
+color0  = #272822
+color8  = #75715e
+color7  = #f8f8f2
+color15 = #f9f8f5
 
 # Red
-color1  = #FF0086
-color9  = #FF0086
+color1  = #f92672
+color9  = #f92672
 
 # Green
-color2  = #00C918
-color10 = #00C918
+color2  = #a6e22e
+color10 = #a6e22e
 
 # Yellow
-color3  = #ABA800
-color11 = #ABA800
+color3  = #f4bf75
+color11 = #f4bf75
 
 # Blue
-color4  = #3777E6
-color12 = #3777E6
+color4  = #66d9ef
+color12 = #66d9ef
 
 # Purple
-color5  = #AD00A1
-color13 = #AD00A1
+color5  = #ae81ff
+color13 = #ae81ff
 
 # Teal
-color6  = #1FAAAA
-color14 = #1FAAAA
+color6  = #a1efe4
+color14 = #a1efe4
 
 # Extra colors
-color16 = #FD8900
-color17 = #CC6633
-color18 = #202020
-color19 = #303030
-color20 = #B0B0B0
-color21 = #E0E0E0
+color16 = #fd971f
+color17 = #cc6633
+color18 = #383830
+color19 = #49483e
+color20 = #a59f85
+color21 = #f5f4f1

@@ -12,3 +12,4 @@
 [alias]
 	rmmergebranch-dry = branch --merged=dev | grep -v '^[ *]*dev$'
 	rmmergebranch = branch --merged=dev | grep -v '^[ *]*dev$'  | xargs git branch -d
+	tree = log --oneline --decorate --all --graph
