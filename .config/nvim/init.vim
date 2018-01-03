@@ -58,6 +58,8 @@
 
   set inccommand=split
 
+  let g:python3_host_prog="/usr/bin/python3"
+
 " Show invisible characters:
 "   Tabs and trailing whitespace
   set list
@@ -78,14 +80,14 @@
   set textwidth=0
   set wildignore+=*/tmp/*,*.so,*.swp,*.zip,node_modules
 
-  set foldmethod=indent foldlevel=3
 " expression to fold '#' comments and empty lines
 "   http://vim.1045645.n5.nabble.com/Hide-comments-td1175338.html
+"   http://www.rtfm-sarl.ch/articles/hide-comments.html
   set fde=getline(v:lnum)=~'^\\s*#'?1:getline(prevnonblank(v:lnum))=~'^\\s*#'?1:getline(nextnonblank(v:lnum))=~'^\\s*#'?1:0
-" autocmd BufRead,BufNewFile   *.zshrc setlocal foldmethod=expr foldexpr=getline(v:lnum)=~'^\s*#'
 "   https://vi.stackexchange.com/questions/3512/how-to-fold-comments
   autocmd BufRead,BufNewFile *.zshrc,*.conf setlocal foldmethod=expr fde foldlevel=0
 
+" save cursor/scroll position when switching between buffers
   autocmd! BufWinLeave * let b:winview = winsaveview()
   autocmd! BufWinEnter * if exists('b:winview') | call winrestview(b:winview) | unlet b:winview
 
@@ -126,6 +128,7 @@
   Plug 'ludovicchabant/vim-gutentags'
   Plug 'majutsushi/tagbar'
   Plug 'mattn/emmet-vim'
+  Plug 'neomake/neomake'
   Plug 'maxmellon/vim-jsx-pretty'
   Plug 'pangloss/vim-javascript'
   Plug 'ryanoasis/vim-devicons'
@@ -177,7 +180,6 @@
       endif
     endfunction
   endif
-
 
   let g:deoplete#enable_at_startup = 1
   let g:deoplete#enable_refresh_always = 1
