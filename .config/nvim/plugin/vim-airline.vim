@@ -1,3 +1,4 @@
+let g:airline_section_x = airline#section#create(['%P'])
 let g:airline#extensions#hunks#enabled = 1
 let g:airline#extensions#hunks#hunk_symbols = ['+', '~', '-']
 let g:airline#extensions#tabline#buffer_nr_show = 1
@@ -60,7 +61,6 @@ function! AirlineInit()
   let g:airline_section_a = airline#section#create(['mode', ' ', 'branch'])
   let g:airline_section_b = airline#section#create_left(['ffenc', 'hunks', 'file'])
   let g:airline_section_c = airline#section#create(['filetype'])
-  let g:airline_section_x = airline#section#create([''])
   let g:airline_section_y = airline#section#create([''])
 endfunction
 autocmd User AirlineAfterInit call AirlineInit()

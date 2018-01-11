@@ -142,7 +142,6 @@
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
   Plug 'vim-scripts/Mark--Karkat'
-  Plug 'vim-syntastic/syntastic'
   call plug#end()
 
 "-------------------------FUNCTIONS-----------------------
