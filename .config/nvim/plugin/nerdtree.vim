@@ -20,7 +20,7 @@ let g:NERDTreeMouseMode=2
 if has('autocmd')
   augroup WincentNERDTree
     autocmd!
-    autocmd User NERDTreeInit call autocmds#attempt_select_last_file()
+    autocmd User NERDTreeInit call wincent#autocmds#attempt_select_last_file()
   augroup END
 endif
 
@@ -39,6 +39,6 @@ function! ToggleNERDTreeFind()
   endif
 endfunction
 
-nnoremap <leader>f :call ToggleNERDTreeFind()<CR>
+nnoremap <leader>f  :call ToggleNERDTreeFind()<CR>
+map      <C-n>      :NERDTreeToggle<CR>
 
-" call defer#packadd('nerdtree', 'NERD_tree.vim')

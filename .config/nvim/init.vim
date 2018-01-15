@@ -16,6 +16,14 @@
   set nowrap
   set showbreak=↪
 
+  " box drawings heavy verticaL (U+2503, UTF-8: E2 94 83)
+  set fillchars=vert:┃
+
+  " middle dot (U+00B7, UTF-8: C2 B7)
+  set fillchars+=fold:·
+  set foldmethod=indent
+  set foldtext=wincent#settings#foldtext()
+
 " Treat all numbers as decimal
   " set nrformats=
 " I don't like Swapfiles
@@ -260,7 +268,6 @@
 "---------------------------------------------------------
   map      <C-f>      <Plug>(easymotion-s)
   map      <C-S-f>    <Plug>(easymotion-s2)
-  map      <C-n>      :NERDTreeToggle<CR>
   noremap  <Up>       <Nop>
   noremap  <Down>     <Nop>
   noremap  <Left>     <Nop>
