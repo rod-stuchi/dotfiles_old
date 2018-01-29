@@ -10,3 +10,6 @@
 [submodule ".config/ranger_git"]
 	path = .config/ranger_git
 	url = https://github.com/ranger/ranger.git
+[submodule ".config/trizen_git"]
+	path = .config/trizen_git
+	url = https://aur.archlinux.org/trizen.git

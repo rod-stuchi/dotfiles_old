@@ -41,4 +41,5 @@ endfunction
 
 nnoremap <leader>f :call ToggleNERDTreeFind()<CR>
 
-" call defer#packadd('nerdtree', 'NERD_tree.vim')
+" Like vim-vinegar.
+nnoremap <silent> - :silent edit <C-R>=empty(expand('%')) ? '.' : fnameescape(expand('%:p:h'))<CR><CR>

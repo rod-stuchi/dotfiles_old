@@ -1,0 +1,19 @@
+snippet tryc "try catch block" b
+try {
+	${1:${VISUAL:.....}}
+} catch (err) {
+	console.error('Error at $2 ::', err);
+}
+endsnippet
+
+snippet /['. ]oid/ "MongoDB ObjectId" r
+'`echo '
+	try {
+		const m = require("mongoose");
+		console.log(m.Types.ObjectId());
+	} catch (err) {
+		console.log("Zica, install mongoose first");
+	}
+' | node`'
+endsnippet
+

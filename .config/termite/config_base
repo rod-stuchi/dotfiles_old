@@ -3,6 +3,7 @@ font          = Monospace 9
 # font          = Droid Sans Mono for Powerline 10
 # font          = Fira Mono for Powerline 9
 # font          = DejaVu Sans Mono for Powerline 9
+# font            Fira Code 9
 font          = Roboto Mono for Powerline 9
 browser       = xdg-open
 dynamic_title = true

@@ -13,7 +13,8 @@ let g:airline#extensions#whitespace#enabled = 1
 let g:airline#extensions#whitespace#mixed_indent_algo = 0
 let g:airline_powerline_fonts = 1
 let g:airline_skip_empty_sections = 1
-let g:airline_theme='powerlineish'
+"let g:airline_theme='powerlineish'
+let g:airline_theme='onedark'
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif

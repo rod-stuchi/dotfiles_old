@@ -49,6 +49,8 @@ fi
 alias vim="nvim"
 alias ld="ls -d */"
 alias lld="ls -ld */"
+alias setclip="xclip -selection clipboard"
+alias getclip="xclip -selection clipboard -o"
 alias cd..="cd .."
 alias config="/usr/bin/git --git-dir=/disks/1TB/Git/rods_config.git --work-tree=$HOME"
 alias gitroot="/usr/bin/git --git-dir=/home/rods/.gitroot --work-tree=/"
@@ -81,7 +83,9 @@ rodsTrueColor() {
   curl -s https://raw.githubusercontent.com/JohnMorales/dotfiles/master/colors/24-bit-color.sh | bash 
 }
 
-rodsListWifi() {  iwlist wlp3s0 scan | ag "ESSID|Encryp|Quality" | xargs -L2 | sort -rk 1 }
+rodsListWifi() {
+  iwlist wlp3s0 scan | ag "ESSID|Encryp|Quality" | xargs -L2 | sort -rk 1
+}
 
 rodsPacRequiredBy() {
   pacman -Qi "$1" | awk -F'[:<=>]' '/^Required/ {print $2}' | xargs -n1 | sort -u
@@ -93,6 +97,14 @@ rodsPacDependsOn() {
 
 rodsCopyFromTo () {
   rsync -ai --chmod u=rw,go=r "$1" "$2" | pv -ls $(find "$1" -type f | wc -l) > /dev/null
+}
+
+rodsPipUpgrade () {
+  sudo pip list --outdated --format=freeze | cut -d = -f 1 | xargs -n1 sudo pip install -U
+}
+
+rodsPipOutdated () {
+  sudo pip list --outdated --format=columns
 }
 
 rodsColor () {
@@ -112,6 +124,13 @@ rodsColor () {
 weather () {
   WEATHER_URL="http://api.openweathermap.org/data/2.5/find?q=liberdade,br&APPID=3fa9fa72d3d8db1a0bf6b9383239faa7&units=metric"
   wget -qO- "${WEATHER_URL}" | python -m json.tool
+}
+
+rodsFTP () {
+  echo ftp://192.168.2.129:21
+  echo user: rods
+  echo pass: 123
+  sudo python -m pyftpdlib -w -p 21 -i 192.168.2.129 -u rods -P 123
 }
 
 # commands apropos / search by commands
