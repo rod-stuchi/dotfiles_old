@@ -131,6 +131,7 @@ autocmd FileType javascript,elixir call rods#funcs#linewidth()
 "-------------------------REMAP KEYS----------------------
 "---------------------------------------------------------
   imap     <c-x><c-j> <plug>(fzf-complete-file-ag)
+  map      <leader>n  <Plug>MarkClear
   nmap     <F9>       :call rods#funcs#ToggleMouse()<CR>
   "Remove all trailing whitespace by pressing F5
   "nnoremap j       jzz

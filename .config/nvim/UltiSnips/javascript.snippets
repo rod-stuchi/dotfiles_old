@@ -17,3 +17,15 @@ snippet /['. ]oid/ "MongoDB ObjectId" r
 ' | node`'
 endsnippet
 
+snippet eslint "disable eslint comment" b
+/* eslint-disable $1 */
+endsnippet
+
+snippet neslint "disable eslint comment next-line" b
+// eslint-disable-next-line $1
+endsnippet
+
+snippet clg "console.log('', x)" b
+console.log('$1', $2); // eslint-disable-line
+endsnippet
+
