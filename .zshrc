@@ -86,6 +86,24 @@ rodsCopyFromTo () {
   rsync -ai --chmod u=rw,go=r "$1" "$2" | pv -ls $(find "$1" -type f | wc -l) > /dev/null
 }
 
+fgd() {
+  git ls-files -m |
+  fzf --ansi --sort --reverse --bind=ctrl-s:toggle-sort \
+      --bind "ctrl-m:execute:
+                (xargs -I % sh -c 'git diff %') << 'FZF-EOF'
+                {}
+FZF-EOF"
+}
+
+fgdc() {
+  git --no-pager diff --cached --name-only |
+  fzf --ansi --sort --reverse --bind=ctrl-s:toggle-sort \
+      --bind "ctrl-m:execute:
+                (xargs -I % sh -c 'git diff --cached %') << 'FZF-EOF'
+                {}
+FZF-EOF"
+}
+
 rodsColor () {
   #find ~/.config/i3/base16/ -perm -u+x | xargs -L 1 basename | fzf --bind 'enter:execute(~/.config/i3/base16/{})+abort'
   find ~/.config/i3/base16/ -perm -u+x | xargs -L 1 basename \

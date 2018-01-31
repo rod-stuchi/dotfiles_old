@@ -20,6 +20,7 @@
   set fillchars=vert:┃
 
   " middle dot (U+00B7, UTF-8: C2 B7)
+  set foldlevel=3
   set fillchars+=fold:·
   set foldmethod=indent
   set foldtext=wincent#settings#foldtext()
@@ -91,9 +92,13 @@
 " expression to fold '#' comments and empty lines
 "   http://vim.1045645.n5.nabble.com/Hide-comments-td1175338.html
 "   http://www.rtfm-sarl.ch/articles/hide-comments.html
-  set fde=getline(v:lnum)=~'^\\s*#'?1:getline(prevnonblank(v:lnum))=~'^\\s*#'?1:getline(nextnonblank(v:lnum))=~'^\\s*#'?1:0
-"   https://vi.stackexchange.com/questions/3512/how-to-fold-comments
-  autocmd BufRead,BufNewFile *.zshrc,*.conf setlocal foldmethod=expr fde foldlevel=0
+  " set fde=getline(v:lnum)=~'^\\s*#'?1:getline(prevnonblank(v:lnum))=~'^\\s*#'?1:getline(nextnonblank(v:lnum))=~'^\\s*#'?1:0
+  " https://vi.stackexchange.com/questions/3512/how-to-fold-comments
+  " autocmd BufRead,BufNewFile *.zshrc,*.conf setlocal foldmethod=expr fde foldlevel=0
+
+  autocmd FileType javascript silent! setlocal foldmethod=indent "expr foldexpr foldlevel=0
+  let &foldexpr='getline(v:lnum)=~''^\s*\*'''
+  nnoremap <silent> _M :setlocal foldmethod=expr foldexpr foldlevel=0<CR>
 
 " save cursor/scroll position when switching between buffers
   autocmd! BufWinLeave * let b:winview = winsaveview()
