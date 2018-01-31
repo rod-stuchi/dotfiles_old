@@ -4,9 +4,11 @@ scriptencoding utf-8
 " http://vim.1045645.n5.nabble.com/Hide-comments-td1175338.html
 " http://www.rtfm-sarl.ch/articles/hide-comments.html
 " https://vi.stackexchange.com/questions/3512/how-to-fold-comments
-" autocmd BufRead,BufNewFile *.zshrc,*.conf setlocal foldmethod=expr fde foldlevel=0
 function! rods#funcs#foldconfigs ()
-  set fde=getline(v:lnum)=~'^\\s*#'?1:getline(prevnonblank(v:lnum))=~'^\\s*#'?1:getline(nextnonblank(v:lnum))=~'^\\s*#'?1:0
+  " set foldexpr=getline(v:lnum)=~'^\\s*#'?1:getline(prevnonblank(v:lnum))=~'^\\s*#'?1:getline(nextnonblank(v:lnum))=~'^\\s*#'?1:0
+  " set foldexpr=getline(v:lnum)=~'^\\s*\"'?1:getline(prevnonblank(v:lnum))=~'^\\s*\"'?1:getline(nextnonblank(v:lnum))=~'^\\s*\"'?1:0
+  let &foldexpr='getline(v:lnum)=~''^\s*#\|^\s*"\|^\s*//\|^\s*$'''
+  set foldmethod=expr foldexpr foldlevel=0
 endfunction
 
 function! rods#funcs#linewidth ()

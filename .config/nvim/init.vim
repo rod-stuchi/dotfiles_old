@@ -136,4 +136,3 @@ autocmd FileType javascript,elixir call rods#funcs#linewidth()
   "Remove all trailing whitespace by pressing F5
   "nnoremap j       jzz
   "nnoremap k       kzz
-
