@@ -125,7 +125,7 @@ call plug#end()
   nnoremap <silent> <Leader>t :Windows<CR>
   nnoremap <silent> <Leader><Space> :Buffers<CR>
 
-autocmd FileType vim,zsh,bash call rods#funcs#foldconfigs()
+autocmd FileType vim,zsh,bash silent! call rods#funcs#foldconfigs()
 autocmd FileType javascript,elixir call rods#funcs#linewidth()
 
 "-------------------------REMAP KEYS----------------------
@@ -136,3 +136,4 @@ autocmd FileType javascript,elixir call rods#funcs#linewidth()
   "Remove all trailing whitespace by pressing F5
   "nnoremap j       jzz
   "nnoremap k       kzz
+

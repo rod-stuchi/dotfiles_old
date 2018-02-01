@@ -6,6 +6,20 @@ try {
 }
 endsnippet
 
+snippet if "if block"
+if ($1) {
+	${2:${VISUAL:implementation here!}}
+}
+endsnippet
+
+snippet ife "if block else"
+if ($1) {
+	${2:${VISUAL:implementation here!}}
+} else {
+	$3
+}
+endsnippet
+
 snippet /['. ]oid/ "MongoDB ObjectId" r
 '`echo '
 	try {
@@ -27,5 +41,13 @@ endsnippet
 
 snippet clg "console.log('', x)" b
 console.log('$1', $2); // eslint-disable-line
+endsnippet
+
+snippet "^imp" "import .. from .." rbA
+import $1 from '$2';
+endsnippet
+
+snippet "^exdef" "export default" rbA
+export default $1;
 endsnippet
 

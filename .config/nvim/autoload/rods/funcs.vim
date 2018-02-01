@@ -54,3 +54,8 @@ if !exists('*VCenterCursor')
   endfunction
 endif
 
+function! rods#funcs#fold_javascript_comments () abort
+  let &foldexpr='getline(v:lnum)=~''^\s*\*\|^\s*//\|^\s*$'''
+  setlocal foldmethod=expr foldexpr foldlevel=0
+  " autocmd FileType javascript silent! setlocal foldmethod=indent "expr foldexpr foldlevel=0
+endfunction
