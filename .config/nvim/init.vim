@@ -13,7 +13,7 @@
   set smartcase
 
 " Deactivate Wrapping
-  set nowrap
+ set nowrap
   set showbreak=↪
 
   " box drawings heavy verticaL (U+2503, UTF-8: E2 94 83)
@@ -58,6 +58,8 @@
 
 " enable mouse
   set mouse=a
+
+  set scrolloff=8
 
 " Set the title of the iterm tab
   set title
@@ -145,10 +147,12 @@
   Plug 'maxmellon/vim-jsx-pretty'
   Plug 'pangloss/vim-javascript'
   Plug 'ryanoasis/vim-devicons'
+  Plug 'SirVer/ultisnips'
   Plug 'scrooloose/nerdtree' ", { 'on': 'NERDTreeToggle' }
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'slashmili/alchemist.vim'
   Plug 'tomasr/molokai'
+  Plug 'guns/xterm-color-table.vim'
   "Plug 'townk/vim-autoclose'
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-surround'
@@ -169,8 +173,6 @@
   "let g:syntastic_javascript_checkers = ['eslint']
   "let g:syntastic_javascript_eslint_exe = 'npx eslint .'
 
-
-  set scrolloff=0
   if !exists('*VCenterCursor')
     augroup VCenterCursor
     au!

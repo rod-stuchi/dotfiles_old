@@ -86,6 +86,7 @@ rodsCopyFromTo () {
   rsync -ai --chmod u=rw,go=r "$1" "$2" | pv -ls $(find "$1" -type f | wc -l) > /dev/null
 }
 
+# fgd - git diff not in stage
 fgd() {
   git ls-files -m |
   fzf --ansi --sort --reverse --bind=ctrl-s:toggle-sort \
@@ -95,11 +96,35 @@ fgd() {
 FZF-EOF"
 }
 
+
+# fgd - git diff HEAD~X..HEAD~Y
+fgdh() {
+  git diff --name-only HEAD~$1..HEAD~$2 |
+  fzf --ansi --sort --reverse --bind=ctrl-s:toggle-sort \
+      --bind "ctrl-m:execute:
+                (xargs -I % sh -c 'git diff HEAD~$1..HEAD~$2 %') << 'FZF-EOF'
+                {}
+FZF-EOF"
+}
+
+# fgd - git diff cached (in stage)
 fgdc() {
   git --no-pager diff --cached --name-only |
   fzf --ansi --sort --reverse --bind=ctrl-s:toggle-sort \
       --bind "ctrl-m:execute:
                 (xargs -I % sh -c 'git diff --cached %') << 'FZF-EOF'
+                {}
+FZF-EOF"
+}
+
+# fshow - git commit browser
+fshow() {
+  git log --graph --color=always \
+      --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+  fzf --ansi --no-sort --reverse --tiebreak=index --bind=ctrl-s:toggle-sort \
+      --bind "ctrl-m:execute:
+                (grep -o '[a-f0-9]\{7\}' | head -1 |
+                xargs -I % sh -c 'git show --color=always % | less -R') << 'FZF-EOF'
                 {}
 FZF-EOF"
 }
