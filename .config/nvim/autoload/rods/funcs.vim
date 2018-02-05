@@ -59,3 +59,18 @@ function! rods#funcs#fold_javascript_comments () abort
   setlocal foldmethod=expr foldexpr foldlevel=0
   " autocmd FileType javascript silent! setlocal foldmethod=indent "expr foldexpr foldlevel=0
 endfunction
+
+" from vimcast comment "dougireton" http://disq.us/p/hircqe
+function! rods#funcs#preserve(command)
+  " Preparation: save last search, and cursor position.
+  let l:win_view = winsaveview()
+  let l:last_search = getreg('/')
+
+  " execute the command without adding to the changelist/jumplist:
+  execute 'keepjumps ' . a:command
+
+  " Clean up: restore previous search history, and cursor position
+  call winrestview(l:win_view)
+  call setreg('/', l:last_search)
+endfunction
+

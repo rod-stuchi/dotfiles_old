@@ -1,0 +1,6 @@
+
+  - session with CTRL+W O
+    https://vi.stackexchange.com/questions/241/undo-only-window
+
+  - commenter
+    https://vimawesome.com/plugin/the-nerd-commenter

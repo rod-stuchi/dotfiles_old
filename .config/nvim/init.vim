@@ -41,6 +41,7 @@ set scrolloff=8                       " 8 lines away from margins
 
 
 " ===================================== indent =====================================
+" autocmd FileType javascript,css,html setlocal ts=2 sts=2 sw=2 expandtab
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
