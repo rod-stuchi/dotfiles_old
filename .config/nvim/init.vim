@@ -38,7 +38,8 @@ set listchars=tab:›\ ,trail:∙,eol:↲   " show invisible characters
 set textwidth=0                       " no limit, disable text width
 set iskeyword+=-                      " makes this-is-a-word a word
 set scrolloff=8                       " 8 lines away from margins
-
+" Wrap soft breaks, break in words
+com! -nargs=* Wrap set wrap linebreak nolist
 
 " ===================================== indent =====================================
 " autocmd FileType javascript,css,html setlocal ts=2 sts=2 sw=2 expandtab
