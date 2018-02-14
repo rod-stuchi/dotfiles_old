@@ -9,3 +9,4 @@ nnoremap <unique> <silent> _$ :call rods#funcs#preserve("%s/\\s\\+$//e")<cr>
 
 " Reindent entire file
 nnoremap <unique> <silent> _i :call rods#funcs#preserve("normal! gg=G")<cr>
+

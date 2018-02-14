@@ -5,11 +5,12 @@ scriptencoding utf-8
 " http://www.rtfm-sarl.ch/articles/hide-comments.html
 " https://vi.stackexchange.com/questions/3512/how-to-fold-comments
 function! rods#funcs#foldconfigs ()
-  " set foldexpr=getline(v:lnum)=~'^\\s*#'?1:getline(prevnonblank(v:lnum))=~'^\\s*#'?1:getline(nextnonblank(v:lnum))=~'^\\s*#'?1:0
-  " set foldexpr=getline(v:lnum)=~'^\\s*\"'?1:getline(prevnonblank(v:lnum))=~'^\\s*\"'?1:getline(nextnonblank(v:lnum))=~'^\\s*\"'?1:0
+  " thanks to crisbra10
+  " https://www.reddit.com/r/vim/comments/7u7lqu/how_foldexpr_regex_with_multi_matches/dtidk57/
   let &foldexpr='getline(v:lnum)=~''^\s*#\|^\s*"\|^\s*//\|^\s*$'''
   set foldmethod=expr foldexpr foldlevel=0
 endfunction
+
 
 function! rods#funcs#linewidth ()
   set colorcolumn=100
@@ -19,6 +20,7 @@ function! rods#funcs#linewidth ()
   highlight OverLength ctermbg=52 guibg=#28342a
   match OverLength /\%101v.\+/
 endfunction
+
 
 function! rods#funcs#ToggleMouse()
   " check if mouse is enabled
@@ -54,11 +56,13 @@ if !exists('*VCenterCursor')
   endfunction
 endif
 
+
 function! rods#funcs#fold_javascript_comments () abort
   let &foldexpr='getline(v:lnum)=~''^\s*\*\|^\s*//\|^\s*$'''
   setlocal foldmethod=expr foldexpr foldlevel=0
   " autocmd FileType javascript silent! setlocal foldmethod=indent "expr foldexpr foldlevel=0
 endfunction
+
 
 " from vimcast comment "dougireton" http://disq.us/p/hircqe
 function! rods#funcs#preserve(command)

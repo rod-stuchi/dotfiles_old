@@ -18,5 +18,8 @@ map <leader>es :sp %%
 map <leader>ev :vsp %%
 map <leader>et :tabe %%
 
-nnoremap <F5>       :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+" use _$ instead
+" nnoremap <F5>       :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+"
+noremap  <F9>       :call rods#funcs#ToggleMouse()<CR>
 nnoremap <leader>zz :call rods#funcs#VCenterCursor()<CR>

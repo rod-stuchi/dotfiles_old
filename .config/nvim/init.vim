@@ -9,7 +9,9 @@ set relativenumber               " number at current line
 set number                       " show relative number
 set showcmd                      " show incomplete moviments at bottom
 set showmode                     " show current mode at bottom
-
+set inccommand=split             " see changes in substitutes command
+" req for nvim, in checkhealth
+let g:python3_host_prog="/usr/bin/python3"
 
 " ====================================== gui =======================================
 set title                        " set title on window
@@ -41,6 +43,7 @@ set scrolloff=8                       " 8 lines away from margins
 " Wrap soft breaks, break in words
 com! -nargs=* Wrap set wrap linebreak nolist
 
+
 " ===================================== indent =====================================
 " autocmd FileType javascript,css,html setlocal ts=2 sts=2 sw=2 expandtab
 set tabstop=2
@@ -54,16 +57,11 @@ set autoindent                   " automatically indent new lines
 
 " change leader to ',' because the backslash is too far away
 let mapleader = ","
-" Unselect the search result
-map <Leader>b :noh<CR>
 " Set the title of the iterm tab
 set diffopt=vertical,filler
-autocmd FileType git set nofoldenable
-set inccommand=split
-  let g:python3_host_prog="/usr/bin/python3"
   "
 
-" =============================== folds ===============================
+" ====================================== folds =====================================
 set fillchars=vert:┃
 set fillchars+=fold:·
 set foldmethod=indent
@@ -76,14 +74,8 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,node_modules
 set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem
 set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
 
-" save cursor/scroll position when switching between buffers
-autocmd! BufWinLeave * let b:winview = winsaveview()
-autocmd! BufWinEnter * if exists('b:winview') | call winrestview(b:winview) | unlet b:winview
-" Makefiles require tabs
-autocmd FileType make setlocal noexpandtab
 
-"-------------------------VimPlug-------------------------
-"---------------------------------------------------------
+" ===================================== vim-plug ===================================
 call plug#begin('~/.local/share/nvim/plugged')
   " Plug 'chriskempson/base16-vim'
   Plug 'joshdick/onedark.vim'
@@ -115,27 +107,24 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'vim-scripts/Mark--Karkat'
 call plug#end()
 
-" ============================== themes ==============================
-  let g:onedark_terminal_italics = 1
-  highlight Normal ctermbg=none
-  highlight NonText ctermbg=none
-  colorscheme onedark
 
-"-------------------------FUNCTIONS-----------------------
-"---------------------------------------------------------
+" ====================================== themes ====================================
+let g:onedark_terminal_italics = 1
+highlight Normal ctermbg=none
+highlight NonText ctermbg=none
+colorscheme onedark
 
-  nnoremap <silent> <Leader>t :Windows<CR>
-  nnoremap <silent> <Leader><Space> :Buffers<CR>
 
+" ===================================== autocmds ===================================
 autocmd FileType vim,zsh,bash silent! call rods#funcs#foldconfigs()
 autocmd FileType javascript,elixir call rods#funcs#linewidth()
-
-"-------------------------REMAP KEYS----------------------
-"---------------------------------------------------------
-  imap     <c-x><c-j> <plug>(fzf-complete-file-ag)
-  map      <leader>n  <Plug>MarkClear
-  nmap     <F9>       :call rods#funcs#ToggleMouse()<CR>
-  "Remove all trailing whitespace by pressing F5
-  "nnoremap j       jzz
-  "nnoremap k       kzz
-
+autocmd FileType git set nofoldenable
+" remap :MarkClear to leader n
+autocmd VimEnter * noremap <leader>n :MarkClear<cr>
+" open fzf in same folder, grabbed from issues fzf.vim
+autocmd VimEnter * nnoremap <silent> <Leader><Leader> :Files <C-R>=expand('%:h')<CR><CR>
+" save cursor/scroll position when switching between buffers
+autocmd! BufWinLeave * let b:winview = winsaveview()
+autocmd! BufWinEnter * if exists('b:winview') | call winrestview(b:winview) | unlet b:winview
+" Makefiles require tabs
+autocmd FileType make setlocal noexpandtab

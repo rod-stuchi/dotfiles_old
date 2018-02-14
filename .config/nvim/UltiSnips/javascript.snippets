@@ -8,7 +8,7 @@ endsnippet
 
 snippet if "if block"
 if ($1) {
-	${2:${VISUAL:implementation here!}}
+	${0:${VISUAL:implementation here!}}
 }
 endsnippet
 
@@ -16,7 +16,7 @@ snippet ife "if block else"
 if ($1) {
 	${2:${VISUAL:implementation here!}}
 } else {
-	$3
+	$0
 }
 endsnippet
 
@@ -31,16 +31,20 @@ snippet /['. ]oid/ "MongoDB ObjectId" r
 ' | node`'
 endsnippet
 
-snippet eslint "disable eslint comment" b
+snippet esli "disable eslint comment" b
 /* eslint-disable $1 */
 endsnippet
 
-snippet neslint "disable eslint comment next-line" b
+snippet "\/\/eslc" "disable eslint comment next-line" r
+// eslint-disable-line
+endsnippet
+
+snippet esln "disable eslint comment next-line" b
 // eslint-disable-next-line $1
 endsnippet
 
 snippet clg "console.log('', x)" b
-console.log('$1', $2); // eslint-disable-line
+/* __delete__ */ console.log('$1', $2); // eslint-disable-line
 endsnippet
 
 snippet "^imp" "import .. from .." rbA
@@ -51,3 +55,14 @@ snippet "^exdef" "export default" rbA
 export default $1;
 endsnippet
 
+snippet cfb "const name = () => { }"
+const ${1:name} = ($2) => {
+	$0
+};
+endsnippet
+
+snippet cfab "const name = () => { }"
+const ${1:name} = async ($2) => {
+	$0
+};
+endsnippet
