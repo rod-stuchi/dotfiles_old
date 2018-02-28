@@ -1,138 +1,86 @@
-" Activate Syntax Highlight
-  syntax enable
-" set default encoding to UTF-8
-  set encoding=utf-8
+" ================================ general configs =================================
 
-" Highlight search results
-  set hlsearch
-" Incremental search, search as you type
-  set incsearch
-" Ignore case when searching
-  set ignorecase smartcase
-" Ignore case when searching lowercase
-  set smartcase
+syntax on                        " enable syntax highlighting
+set hidden                       " better buffer handling
+set mouse=a                      " enable mouse
+set history=2000                 " store more commands
+set novisualbell                 " no borring sound
+set relativenumber               " number at current line
+set number                       " show relative number
+set showcmd                      " show incomplete moviments at bottom
+set showmode                     " show current mode at bottom
+set inccommand=split             " see changes in substitutes command
+" req for nvim, in checkhealth
+let g:python3_host_prog="/usr/bin/python3"
 
-" Deactivate Wrapping
- set nowrap
-  set showbreak=↪
+" ====================================== gui =======================================
+set title                        " set title on window
+set termguicolors                " set nvim 24-bit color, like gui
+set cursorline                   " set cursor line
+set cursorcolumn                 " set cursor column line
+set linespace=3                  " line space in guis
+set guifont=Fira\ Code\ 12       " font with ligatures, nice in Konsole
 
-  " box drawings heavy verticaL (U+2503, UTF-8: E2 94 83)
-  set fillchars=vert:┃
 
-  " middle dot (U+00B7, UTF-8: C2 B7)
-  set foldlevel=3
-  set fillchars+=fold:·
-  set foldmethod=indent
-  set foldtext=wincent#settings#foldtext()
+" ===================================== search =====================================
 
-" Treat all numbers as decimal
-  " set nrformats=
-" I don't like Swapfiles
-  " set noswapfile
-" Don't make a backup before overwriting a file.
-  " set nobackup
-" And again.
-  " set nowritebackup
-" I prefer , to be the leader key
-  let mapleader = ","
-" show line numbers
-  set relativenumber number
-" MOAR colors
-  set t_Co=256
-" Unselect the search result
-  map <Leader>b :noh<CR>
-" Better buffer handling
-  set hidden
-" hightlight cursor position
-  set cursorline cursorcolumn
-" set font compatible with arline
-  set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types\ 11
-  "set guifont=Source\ Code\ Pro\ for\ Powerline
+set incsearch                    " find the next match as we typing
+set hlsearch                     " highlight by default
+set ignorecase                   " ignore case when search...
+set smartcase                    " ... unless you type a Capital
 
-" highlight column after 'textwidth'
-  set colorcolumn=+1
-" highlight three columns after 'textwidth'
-  set colorcolumn=+1,+2,+3
-  highlight ColorColumn ctermbg=darkgrey guibg=darkgrey
-  set colorcolumn=100
 
-" enable mouse
-  set mouse=a
+" ====================================== text ======================================
 
-  set scrolloff=8
+set nowrap                            " no wrap text
+set showbreak=↪                       " when wrapping is enable
+set encoding=utf-8                    " set text unicode
+set list                              " for invisible characters, like tab, space
+set listchars=tab:›\ ,trail:∙,eol:↲   " show invisible characters
+set textwidth=0                       " no limit, disable text width
+set iskeyword+=-                      " makes this-is-a-word a word
+set scrolloff=8                       " 8 lines away from margins
+" Wrap soft breaks, break in words
+com! -nargs=* Wrap set wrap linebreak nolist
 
+
+" ===================================== indent =====================================
+" autocmd FileType javascript,css,html setlocal ts=2 sts=2 sw=2 expandtab
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set expandtab
+set backspace=indent,eol,start   " backspace through everything in insert mode
+set autoindent                   " automatically indent new lines
+" set smartindent                  " automatically set the indent of a new line
+
+
+" change leader to ',' because the backslash is too far away
+let mapleader = ","
 " Set the title of the iterm tab
-  set title
+set diffopt=vertical,filler
+  "
 
-  set diffopt=vertical,filler
-  autocmd FileType git set nofoldenable
+" ====================================== folds =====================================
+set fillchars=vert:┃
+set fillchars+=fold:·
+set foldmethod=indent
+set foldlevel=3
+set foldtext=wincent#settings#foldtext()
 
-  set inccommand=split
 
-  let g:python3_host_prog="/usr/bin/python3"
+" disable some files
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,node_modules
+set wildignore+=*.o,*.out,*.obj,.git,*.rbc,*.rbo,*.class,.svn,*.gem
+set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
 
-" Show invisible characters:
-"   Tabs and trailing whitespace
-  set list
-  set listchars=tab:›\ ,trail:.
 
-  set tabstop=2
-" Soft-Tabs should be 2 spaces
-  set softtabstop=2
-" When shifting, use 2 spaces
-  set shiftwidth=2
-" Use Soft-Tabs
-  set expandtab
-" backspace through everything in insert mode
-  set backspace=indent,eol,start
-" Automatically set the indent of a new line
-  set autoindent smartindent
-
-  set textwidth=0
-  set wildignore+=*/tmp/*,*.so,*.swp,*.zip,node_modules
-
-" expression to fold '#' comments and empty lines
-"   http://vim.1045645.n5.nabble.com/Hide-comments-td1175338.html
-"   http://www.rtfm-sarl.ch/articles/hide-comments.html
-  " set fde=getline(v:lnum)=~'^\\s*#'?1:getline(prevnonblank(v:lnum))=~'^\\s*#'?1:getline(nextnonblank(v:lnum))=~'^\\s*#'?1:0
-  " https://vi.stackexchange.com/questions/3512/how-to-fold-comments
-  " autocmd BufRead,BufNewFile *.zshrc,*.conf setlocal foldmethod=expr fde foldlevel=0
-
-  autocmd FileType javascript silent! setlocal foldmethod=indent "expr foldexpr foldlevel=0
-  let &foldexpr='getline(v:lnum)=~''^\s*\*'''
-  nnoremap <silent> _M :setlocal foldmethod=expr foldexpr foldlevel=0<CR>
-
-" save cursor/scroll position when switching between buffers
-  autocmd! BufWinLeave * let b:winview = winsaveview()
-  autocmd! BufWinEnter * if exists('b:winview') | call winrestview(b:winview) | unlet b:winview
-
-" Makefiles require tabs
-  autocmd FileType make setlocal noexpandtab
-
-"-------------------------VimPlug-------------------------
-"---------------------------------------------------------
-  call plug#begin('~/.local/share/nvim/plugged')
-  Plug 'chriskempson/base16-vim'
-
-" CtrlP: Full path fuzzy finder
+" ===================================== vim-plug ===================================
+call plug#begin('~/.local/share/nvim/plugged')
+  " Plug 'chriskempson/base16-vim'
+  Plug 'joshdick/onedark.vim'
   Plug 'ctrlpvim/ctrlp.vim'
-    " Borrowed from @skwp
-    if executable('ag')
-      " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-      let g:ctrlp_user_command =
-        \ 'ag %s --files-with-matches -g "" --ignore "\.git$\|\.hg$\|\.svn$|node_modules|docs$"'
-
-      " ag is fast enough that CtrlP doesn't need to cache
-      let g:ctrlp_use_caching = 0
-      let g:ctrlp_match_window = 'min:4,max:24'
-    else
-      " Fall back to using git ls-files if Ag is not available
-      let g:ctrlp_custom_ignore = '\.git$\|\.hg$\|\.svn$|node_modules|docs$'
-      let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
-    endif
   Plug 'airblade/vim-gitgutter'
-    " increase signs, default was 500
-    let g:gitgutter_max_signs = 1500
   Plug 'easymotion/vim-easymotion'
   Plug 'elixir-lang/vim-elixir'
   Plug 'fleischie/vim-styled-components'
@@ -141,152 +89,42 @@
   Plug 'junegunn/vim-easy-align'
   Plug 'justinj/vim-react-snippets'
   Plug 'ludovicchabant/vim-gutentags'
-  Plug 'majutsushi/tagbar'
   Plug 'mattn/emmet-vim'
   Plug 'neomake/neomake'
   Plug 'maxmellon/vim-jsx-pretty'
   Plug 'pangloss/vim-javascript'
   Plug 'ryanoasis/vim-devicons'
-  Plug 'SirVer/ultisnips'
   Plug 'scrooloose/nerdtree' ", { 'on': 'NERDTreeToggle' }
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'SirVer/ultisnips'
   Plug 'slashmili/alchemist.vim'
   Plug 'tomasr/molokai'
-  Plug 'guns/xterm-color-table.vim'
-  "Plug 'townk/vim-autoclose'
   Plug 'tpope/vim-fugitive'
+  Plug 'guns/xterm-color-table.vim'
   Plug 'tpope/vim-surround'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
   Plug 'vim-scripts/Mark--Karkat'
-  call plug#end()
-
-"-------------------------FUNCTIONS-----------------------
-"---------------------------------------------------------
-  "set statusline+=%#warningmsg#
-  "set statusline+=%{SyntasticStatuslineFlag()}
-  "set statusline+=%*
-  "let g:syntastic_always_populate_loc_list = 1
-  "let g:syntastic_auto_loc_list = 1
-  "let g:syntastic_check_on_open = 0
-  "let g:syntastic_check_on_wq = 0
-  "let g:syntastic_javascript_checkers = ['eslint']
-  "let g:syntastic_javascript_eslint_exe = 'npx eslint .'
-
-  if !exists('*VCenterCursor')
-    augroup VCenterCursor
-    au!
-    au OptionSet *,*.*
-      \ if and( expand("<amatch>")=='scrolloff' ,
-      \         exists('#VCenterCursor#WinEnter,WinNew,VimResized') )|
-      \   au! VCenterCursor WinEnter,WinNew,VimResized|
-      \ endif
-    augroup END
-    function VCenterCursor()
-      if !exists('#VCenterCursor#WinEnter,WinNew,VimResized')
-        let s:default_scrolloff=&scrolloff
-        let &scrolloff=winheight(win_getid())/2
-        au VCenterCursor WinEnter,WinNew,VimResized *,*.*
-          \ let &scrolloff=winheight(win_getid())/2
-      else
-        au! VCenterCursor WinEnter,WinNew,VimResized
-        let &scrolloff=s:default_scrolloff
-      endif
-    endfunction
-  endif
-
-  let g:deoplete#enable_at_startup = 1
-  let g:deoplete#enable_refresh_always = 1
-
-  "Narrow ag results within vim
-  function! s:ag_to_qf(line)
-    let parts = split(a:line, ':')
-    return {'filename': parts[0], 'lnum': parts[1], 'col': parts[2],
-          \ 'text': join(parts[3:], ':')}
-  endfunction
-
-  function! s:ag_handler(lines)
-    if len(a:lines) < 2 | return | endif
-
-    let cmd = get({'ctrl-x': 'split',
-                 \ 'ctrl-v': 'vertical split',
-                 \ 'ctrl-t': 'tabe'}, a:lines[0], 'e')
-    let list = map(a:lines[1:], 's:ag_to_qf(v:val)')
-
-    let first = list[0]
-    execute cmd escape(first.filename, ' %#\')
-    execute first.lnum
-    execute 'normal!' first.col.'|zz'
-
-    if len(list) > 1
-      call setqflist(list)
-      copen
-      wincmd p
-    endif
-  endfunction
-
-  command! -nargs=* Ag call fzf#run({
-  \ 'source':  printf('ag --nogroup --column --color "%s"',
-  \                   escape(empty(<q-args>) ? '^(?=.)' : <q-args>, '"\')),
-  \ 'sink*':    function('<sid>ag_handler'),
-  \ 'options': '--ansi --expect=ctrl-t,ctrl-v,ctrl-x --delimiter : --nth 4.. '.
-  \            '--multi --bind=ctrl-a:select-all,ctrl-d:deselect-all '.
-  \            '--color hl:68,hl+:110',
-  \ 'down':    '50%'
-  \ })
-
-  command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
-
-  "Toggle Mouse
-  function! ToggleMouse()
-    " check if mouse is enabled
-    if &mouse == 'a'
-        " disable mouse
-        set mouse=
-    else
-        " enable mouse everywhere
-        set mouse=a
-    endif
-  endfunc
+call plug#end()
 
 
-  command! -nargs=* OpenTabs call fzf#run({'sink': 'tabedit', 'options': '--multi --reverse'})
-
-  nnoremap <silent> <Leader>t :Windows<CR>
-  nnoremap <silent> <Leader><Space> :Buffers<CR>
-  " [Buffers] Jump to the existing window if possible
-  let g:fzf_buffers_jump = 1
-
-"-------------------------COLOR SCHEME--------------------
-"---------------------------------------------------------
-  syntax enable
-  let base16colorspace=256
-  colorscheme base16-monokai
-  highlight Normal ctermbg=none
-  highlight NonText ctermbg=none
+" ====================================== themes ====================================
+let g:onedark_terminal_italics = 1
+highlight Normal ctermbg=none
+highlight NonText ctermbg=none
+colorscheme onedark
 
 
-"-------------------------REMAP KEYS----------------------
-"---------------------------------------------------------
-  map      <C-f>      <Plug>(easymotion-s)
-  map      <C-S-f>    <Plug>(easymotion-s2)
-  noremap  <Up>       <Nop>
-  noremap  <Down>     <Nop>
-  noremap  <Left>     <Nop>
-  noremap  <Right>    <Nop>
-  xmap     ga         <Plug>(EasyAlign)
-  nnoremap <leader>zz :call VCenterCursor()<CR>
-  imap     <c-x><c-j> <plug>(fzf-complete-file-ag)
-  nmap     <F8>       :TagbarToggle<CR>
-  nmap     <F9>       :call ToggleMouse()<CR>
-  "Remove all trailing whitespace by pressing F5
-  nnoremap <F5>       :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
-  "paste keep indentation
-  nnoremap gp         p`[v`]=
-  "nnoremap j       jzz
-  "nnoremap k       kzz
+" ===================================== autocmds ===================================
+autocmd FileType vim,zsh,bash silent! call rods#funcs#foldconfigs()
+autocmd FileType javascript,elixir call rods#funcs#linewidth()
+autocmd FileType git set nofoldenable
+" remap :MarkClear to leader n
+autocmd VimEnter * noremap <leader>n :MarkClear<cr>
+" open fzf in same folder, grabbed from issues fzf.vim
+autocmd VimEnter * nnoremap <silent> <Leader><Leader> :Files <C-R>=expand('%:h')<CR><CR>
+" save cursor/scroll position when switching between buffers
+autocmd! BufWinLeave * let b:winview = winsaveview()
+autocmd! BufWinEnter * if exists('b:winview') | call winrestview(b:winview) | unlet b:winview
+" Makefiles require tabs
+autocmd FileType make setlocal noexpandtab

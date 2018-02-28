@@ -5,3 +5,6 @@ let g:UltiSnipsListSnippets="<s-tab>"
 let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsUsePythonVersion = 3
 let g:UltiSnipsSnippetsDir="~/.config/nvim/UltiSnips"
+" disable looking for snippets in other folders
+" good to memorize our on snippets for while
+
