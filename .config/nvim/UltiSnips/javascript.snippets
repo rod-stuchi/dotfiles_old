@@ -24,8 +24,8 @@ snippet /['. ]oid/ "MongoDB ObjectId" r
 '`echo " 
 	console.log(
 		(new Date().getTime() + (~~Math.random() * 9999)).toString(16)
-		+ (new Date().getTime() + (~~Math.random() * 9999)).toString(16)
-		+ (100 + (~~Math.random() * 99)).toString(16)
+		+ ((~~Math.random() * 9999)).toString(16)
+		+ (100 + (~~Math.random() * 99) + new Date().getTime()).toString(16)
 	)" | node`'
 endsnippet
 
