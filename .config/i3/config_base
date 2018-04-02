@@ -25,6 +25,9 @@ set $alt Mod1
 # KDE Klipper (clipboard manager)
   exec XDG_CURRENT_DESKTOP=gnome klipper
 
+# Dunst desktop notifications
+  exec --no-startup-id dunst -config $HOME/.config/dunst/dunstrc
+
 # Configure TouchPad
   #https://wiki.archlinux.org/index.php/Touchpad_Synaptics
   #ftp://www.x.org/pub/X11R7.5/doc/man/man4/synaptics.4.html
@@ -158,7 +161,7 @@ set $alt Mod1
   for_window [class="^qBittorrent$"] focus
   for_window [class="^Google-chrome$"] focus
   for_window [class="^Google-chrome$" window_role="pop-up"] floating enable border pixel 1
-  for_window [class="^Vmware$"] focus
+  for_window [class="^Vmware$"] no_focus
   #for_window [class=".*"] title_format "<b>%title</b>"
   #force_focus_wrapping yes
 

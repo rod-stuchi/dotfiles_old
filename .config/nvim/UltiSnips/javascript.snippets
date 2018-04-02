@@ -20,15 +20,12 @@ if ($1) {
 }
 endsnippet
 
-snippet /['. ]oid/ "MongoDB ObjectId" r
-'`echo '
-	try {
-		const m = require("mongoose");
-		console.log(m.Types.ObjectId());
-	} catch (err) {
-		console.log("Zica, install mongoose first");
-	}
-' | node`'
+snippet /[']oid/ "MongoDB ObjectId" r
+'`oid`'
+endsnippet
+
+snippet /[.]oid/ "MongoDB ObjectId" r
+`oid`
 endsnippet
 
 snippet esli "disable eslint comment" b
