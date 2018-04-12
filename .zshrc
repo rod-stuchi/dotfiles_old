@@ -1,9 +1,10 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export PATH="$PATH:/opt/yarn/bin"
-export ANDROID_HOME=$HOME/Android/Sdk
+export ANDROID_HOME=/disks/1TB/android/android-sdk
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 export PATH="$PATH:$HOME/.config/yarn/global/node_modules/.bin"
+export PATH="$PATH:$HOME/.gem/ruby/2.5.0/bin"
 export MANPAGER="nvim -c 'set ft=man' -"
 export EDITOR=nvim
 
@@ -19,7 +20,7 @@ export ZSH=$HOME/.oh-my-zsh
 
 ZSH_THEME="robbyrussell"
 
-plugins=(adb archlinux colorize dirhistory docker dotenv encode64 frontend-search git git-extras git-open history jsontools jump mix pip react-native sudo yarn z) 
+plugins=(adb archlinux colorize dirhistory docker dotenv encode64 frontend-search git git-extras git-open history jsontools jump mix pip react-native sudo yarn z)
 
 source $ZSH/oh-my-zsh.sh
 . $HOME/.asdf/asdf.sh
@@ -78,9 +79,9 @@ bin2dec(){ echo "$((2#$1))" }
 
 copy(){ echo -n "$1" | xclip -selection clipboard }
 
-rodsTrueColor() { 
+rodsTrueColor() {
   # https://gist.github.com/XVilka/8346728
-  curl -s https://raw.githubusercontent.com/JohnMorales/dotfiles/master/colors/24-bit-color.sh | bash 
+  curl -s https://raw.githubusercontent.com/JohnMorales/dotfiles/master/colors/24-bit-color.sh | bash
 }
 
 rodsListWifi() {
@@ -205,6 +206,25 @@ fco() {
   git checkout $(echo "$target" | awk '{print $2}')
 }
 
+# gbar - list 'git branch' by author, ordered by last commit date
+gbar() {
+  for branch in `git branch -r | grep -v HEAD`;do echo -e `git show --format="%ai %ar by %an" $branch | head -n 1` \\t$branch; done | sort -r
+}
+
+# get total usage memory em MB by process name, like chrome, vim, etc
+memusage() {
+  t=0;
+  pids=$(pidof $1);
+  for p in ${(ps: :)pids}; do
+    cat /proc/$p/status \
+      | grep -i vmrss \
+      | awk '{print $2}';
+  done \
+    | while read m; do let t=$t+$m; echo $(($t/1024)); done \
+    | tail -n1 \
+    | xargs -I@ echo $1":" @ "MB"
+}
+
 # grabbed from https://gist.github.com/SlexAxton/4989674
 gifify() {
   if [[ -n "$1" ]]; then
@@ -219,6 +239,9 @@ gifify() {
     echo "proper usage: gifify <input_movie.mov>. You DO need to include extension."
   fi
 }
+# https://unix.stackexchange.com/questions/106375/make-zsh-alt-f-behave-like-emacs-alt-f
+bindkey '\ef' emacs-forward-word
+bindkey '\eb' emacs-backward-word
 
 # commands apropos / search by commands
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
