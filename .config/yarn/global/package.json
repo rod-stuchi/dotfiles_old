@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "babel-cli": "^6.26.0",
     "browser-sync": "^2.18.13",
     "create-react-app": "^1.4.0",
     "create-react-native-app": "^1.0.0",
@@ -8,6 +9,7 @@
     "js.inspect": "^0.0.13",
     "nodemon": "^1.12.1",
     "npm-check": "^5.5.2",
+    "oid-cli": "^1.0.1",
     "pm2": "^2.9.1",
     "react-native-cli": "^2.0.1",
     "reload": "^2.2.1",

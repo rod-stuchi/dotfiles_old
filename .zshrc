@@ -65,6 +65,8 @@ alias rodsSubmarinoFatura='~/.scripts/submarino/fatura'
 alias rodsAmexFatura='~/.scripts/amex/fatura'
 alias rodsNubankFatura='~/.scripts/nubank/fatura'
 alias rodsmpd='mpd -v .config/mpd/mpd.conf'
+alias hdmiOff='xrandr --output HDMI1 --off'
+alias hdmi1024x728='xrandr --output HDMI1 --mode 1024x768 --above eDP1'
 
 # functions
 
@@ -171,6 +173,10 @@ weather () {
   WEATHER_URL="http://api.openweathermap.org/data/2.5/find?q=Jabaquara&APPID=3fa9fa72d3d8db1a0bf6b9383239faa7&units=metric"
   wget -qO- "${WEATHER_URL}" | python -m json.tool
 }
+
+# key bindings
+bindkey '\ef' emacs-forward-word
+bindkey '\eb' emacs-backward-word
 
 # commands apropos / search by commands
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
