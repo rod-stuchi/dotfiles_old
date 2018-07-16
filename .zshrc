@@ -9,7 +9,8 @@ export MANPAGER="nvim -c 'set ft=man' -"
 export EDITOR=nvim
 
 # If you don't want to exclude hidden files, use the following command:
-export FZF_DEFAULT_COMMAND='ag --hidden --path-to-ignore ~/.config/ag/agignore -g ""'
+# export FZF_DEFAULT_COMMAND='ag --hidden --path-to-ignore ~/.config/ag/agignore -g ""'
+export FZF_DEFAULT_COMMAND='rg --files --hidden --smart-case --no-messages --follow --glob "!.git" --glob "!node_modules"'
 
 # To apply the command to CTRL-T as well
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -53,7 +54,7 @@ alias lld="ls -ld */"
 alias setclip="xclip -selection clipboard"
 alias getclip="xclip -selection clipboard -o"
 alias cd..="cd .."
-alias config="/usr/bin/git --git-dir=/disks/1TB/Git/rods_config.git --work-tree=$HOME"
+alias ggit="/usr/bin/git --git-dir=/home/rods/.dotfiles --work-tree=$HOME"
 alias gitroot="/usr/bin/git --git-dir=/home/rods/.gitroot --work-tree=/"
 alias rodsdisk="df -h -l -t ext4 -t fuseblk"
 alias rodsvideo-720p="youtube-dl -f 'bestvideo[height<=720]+bestaudio/best[height<=720]' -o '%(title)s.%(ext)s' "
@@ -128,10 +129,10 @@ weather () {
 }
 
 rodsFTP () {
-  echo ftp://192.168.2.129:21
+  echo ftp://192.168.2.0.3
   echo user: rods
   echo pass: 123
-  sudo python -m pyftpdlib -w -p 21 -i 192.168.2.129 -u rods -P 123
+  sudo python -m pyftpdlib -w -p 21 -i 192.168.0.3 -u rods -P 123
 }
 
 # fv - open file in neovim
@@ -211,6 +212,12 @@ gbar() {
   for branch in `git branch -r | grep -v HEAD`;do echo -e `git show --format="%ai %ar by %an" $branch | head -n 1` \\t$branch; done | sort -r
 }
 
+# git branch parent, grabbed from https://gist.github.com/joechrysler/6073741
+gbparent() {
+  branch=`git rev-parse --abbrev-ref HEAD`
+  git show-branch -a 2>/dev/null | grep '\*' | grep -v "$branch" | head -n1 | sed 's/.*\[\(.*\)\].*/\1/' | sed 's/[\^~].*//'
+}
+
 # get total usage memory em MB by process name, like chrome, vim, etc
 memusage() {
   t=0;
@@ -223,6 +230,19 @@ memusage() {
     | while read m; do let t=$t+$m; echo $(($t/1024)); done \
     | tail -n1 \
     | xargs -I@ echo $1":" @ "MB"
+}
+
+dockermemusage() {
+  for line in `docker ps \
+    | awk '{print $1}' \
+    | grep -v CONTAINER`; do
+      docker ps | grep $line | awk '{printf $NF" "}' \
+        && echo $(( `cat /sys/fs/cgroup/memory/docker/$line*/memory.usage_in_bytes` / 1024 / 1024 ))MB ;
+    done
+}
+
+dockerstatus() {
+  docker ps | awk '{if(NR>1) print $NF}'|xargs docker stats
 }
 
 # grabbed from https://gist.github.com/SlexAxton/4989674
@@ -239,6 +259,35 @@ gifify() {
     echo "proper usage: gifify <input_movie.mov>. You DO need to include extension."
   fi
 }
+
+# Easy extract one file from zip, rar, 7z files
+7z1() {
+  if [[ ! -z $1 ]] then
+    7z l $1 | tail -n +19 | fzf --height 50% --reverse | awk '{print $6}' | xargs -i{} 7z e $1 "{}"
+  else
+    echo "invalid argument"
+  fi
+}
+
+# tfen: stands for Translate From ENglish
+# usage:
+# tfen he eats apples
+tfen() {
+  trans -b en:pt "$*"
+}
+
+# tfpt: stands for Translate From PorTugese
+# usage:
+# tfpt ele come maças
+tfpt() {
+  trans -b pt:en "$*"
+}
+
+
+# get battery whatts consumption
+# cat /sys/class/power_supply/BAT0/power_now | awk '{print $1*10^-6 " W"}'
+
+
 # https://unix.stackexchange.com/questions/106375/make-zsh-alt-f-behave-like-emacs-alt-f
 bindkey '\ef' emacs-forward-word
 bindkey '\eb' emacs-backward-word

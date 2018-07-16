@@ -110,7 +110,7 @@ set $alt Mod1
   bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
-  bindsym $mod+Shift+space floating toggle
+  bindsym $mod+Shift+space floating toggle, exec i3-msg resize set 40 ppt 40 ppt, move position center
 
   # workspace_auto_back_and_forth yes
   # bindsym $alt+tab workspace back_and_forth
@@ -176,18 +176,20 @@ set $alt Mod1
   for_window [class="Arandr"] floating enable
   for_window [class="Display"] floating enable
   for_window [class="Gnome-system-monitor"] floating enable
-  for_window [class="Vlc"] floating enable
+  for_window [class="vlc"] floating enable
+  for_window [class="smplayer"] floating enable
   for_window [class="^Gedit|Evince|Gthumb$"] border pixel 2
   for_window [title="Terminator Preferences"] floating enable
   for_window [class="^qBittorrent$"] focus
   for_window [class="^Google-chrome$"] focus
   for_window [class="^Google-chrome$" window_role="pop-up"] floating enable border pixel 1
   for_window [class="^Vmware$"] no_focus
-  #for_window [class=".*"] title_format "<b>%title</b>"
+  #for_window [floating] exec i3-msg resize set 20 ppt 30 ppt, move position center
   #force_focus_wrapping yes
 
 # reload the configuration file
-  bindsym $mod+Shift+c exec "cat ~/.config/i3/colors ~/.config/i3/config_base > ~/.config/i3/config && i3-msg reload"
+  #bindsym $mod+Shift+c exec "cat ~/.config/i3/colors ~/.config/i3/config_base > ~/.config/i3/config && i3-msg reload"
+  bindsym $mod+Shift+c reload
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
   bindsym $mod+Shift+r restart
