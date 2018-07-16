@@ -5,3 +5,4 @@ let g:gutentags_file_list_command = {
       \ },
       \ }
 let g:gutentags_generate_on_new = 1
+let g:gutentags_generate_on_missing = 1

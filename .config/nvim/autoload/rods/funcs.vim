@@ -4,7 +4,7 @@ scriptencoding utf-8
 " http://vim.1045645.n5.nabble.com/Hide-comments-td1175338.html
 " http://www.rtfm-sarl.ch/articles/hide-comments.html
 " https://vi.stackexchange.com/questions/3512/how-to-fold-comments
-function! rods#funcs#foldconfigs ()
+function! rods#funcs#fold_comments ()
   " thanks to crisbra10
   " https://www.reddit.com/r/vim/comments/7u7lqu/how_foldexpr_regex_with_multi_matches/dtidk57/
   let &foldexpr='getline(v:lnum)=~''^\s*#\|^\s*"\|^\s*//\|^\s*$'''
@@ -19,6 +19,11 @@ function! rods#funcs#linewidth ()
   " https://stackoverflow.com/a/235970/6785523
   highlight OverLength ctermbg=52 guibg=#28342a
   match OverLength /\%101v.\+/
+endfunction
+
+function! rods#funcs#linewidth2 ()
+  highlight ColorColumn ctermbg=magenta guibg=#b41158
+  match ColorColumn /\%101v/
 endfunction
 
 
@@ -78,3 +83,10 @@ function! rods#funcs#preserve(command)
   call setreg('/', l:last_search)
 endfunction
 
+function! rods#funcs#ToggleNERDTreeFind()
+  if g:NERDTree.IsOpen()
+    execute ':NERDTreeClose'
+  else
+    execute ':NERDTreeFind'
+  endif
+endfunction
