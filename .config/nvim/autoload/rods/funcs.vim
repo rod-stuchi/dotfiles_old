@@ -7,7 +7,7 @@ scriptencoding utf-8
 function! rods#funcs#fold_comments ()
   " thanks to crisbra10
   " https://www.reddit.com/r/vim/comments/7u7lqu/how_foldexpr_regex_with_multi_matches/dtidk57/
-  let &foldexpr='getline(v:lnum)=~''^\s*#\|^\s*"\|^\s*//\|^\s*$'''
+  let &foldexpr='getline(v:lnum)=~''^\s*#\|^\s*\*\|^\s*"\|^\s*//\|^\s*$'''
   set foldmethod=expr foldexpr foldlevel=0
 endfunction
 

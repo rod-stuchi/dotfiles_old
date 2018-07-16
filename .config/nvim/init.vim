@@ -11,13 +11,17 @@ set showcmd                          " show incomplete moviments at bottom
 set showmode                         " show current mode at bottom
 set inccommand=split                 " see changes in substitutes command
 " req for nvim, in checkhealth
-" linux
-" let g:python_host_prog="/usr/bin/python"
-" let g:python3_host_prog="/usr/bin/python3"
-
-" mac OS
-let g:python_host_prog="/usr/local/bin/python"
-let g:python3_host_prog="/usr/local/bin/python3"
+if has('unix')
+  if has('mac')
+    " mac OS
+    let g:python_host_prog="/usr/local/bin/python"
+    let g:python3_host_prog="/usr/local/bin/python3"
+  el" se
+    " linux
+    let g:python_host_prog="/usr/bin/python2"
+    let g:python3_host_prog="/usr/bin/python"
+  endif
+endif
 
 " ====================================== gui =======================================
 set title                            " set title on window
@@ -130,7 +134,7 @@ colorscheme onedark
 
 " ===================================== autocmds ===================================
 autocmd FileType vim,zsh,bash silent! call rods#funcs#fold_comments()
-autocmd FileType javascript,elixir call rods#funcs#linewidth()
+autocmd FileType javascript,elixir call rods#funcs#linewidth2()
 autocmd FileType git set nofoldenable
 
 " save cursor/scroll position when switching between buffers
