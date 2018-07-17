@@ -21,7 +21,10 @@ export ZSH=$HOME/.oh-my-zsh
 
 ZSH_THEME="robbyrussell"
 
-plugins=(adb archlinux colorize dirhistory docker dotenv encode64 frontend-search git git-extras git-open history jsontools jump mix pip react-native sudo yarn z)
+plugins=(
+adb archlinux colorize dirhistory docker dotenv encode64 frontend-search git git-extras git-open history jsontools jump mix pip react-native sudo yarn z
+vi-mode
+)
 
 source $ZSH/oh-my-zsh.sh
 . $HOME/.asdf/asdf.sh
@@ -289,8 +292,26 @@ tfpt() {
 
 
 # https://unix.stackexchange.com/questions/106375/make-zsh-alt-f-behave-like-emacs-alt-f
-bindkey '\ef' emacs-forward-word
-bindkey '\eb' emacs-backward-word
+# bindkey '\ef' emacs-forward-word
+# bindkey '\eb' emacs-backward-word
+#
+# bindkey -v
+# bindkey '^P' up-history
+# bindkey '^N' down-history
+# bindkey '^?' backward-delete-char
+# bindkey '^h' backward-delete-char
+# bindkey '^w' backward-kill-word
+# bindkey '^r' history-incremental-search-backward
+#
+# function zle-line-init zle-keymap-select {
+#     VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
+#     RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}$(git_custom_status) $EPS1"
+#     zle reset-prompt
+# }
+#
+# zle -N zle-line-init
+# zle -N zle-keymap-select
+# export KEYTIMEOUT=1
 
 # commands apropos / search by commands
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
