@@ -1,2 +1,0 @@
-cat ~/.config/i3/base16/"${0##*/}".config ~/.config/i3/config_base > ~/.config/i3/config
-i3-msg reload

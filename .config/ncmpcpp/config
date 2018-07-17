@@ -1,9 +1,0 @@
-ncmpcpp_directory = ~/.config/ncmpcpp
-lyrics_directory = ~/.config/ncmpcpp/lyrics
-mpd_music_dir = ~/disks/1TB/MP3
-now_playing_prefix = ❱ $b
-now_playing_suffix = $/b
-song_columns_list_format = (2f)[]{: } (20)[]{a} (6f)[green]{NEr} (40)[white]{t|f:Title}  (20)[cyan]{b} (10)[cyan]{y:Year} (7f)[magenta]{l}
-song_list_format = {$(125)%y$9 - }{$b%a$/b - }{$(41)%b - $9}{$(203)%t$9}|{$8%f$9}$R{$(41)(%l)$9}
-progressbar_look = "─⊙╶"
-display_bitrate = yes

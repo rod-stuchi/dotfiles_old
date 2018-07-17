@@ -38,6 +38,7 @@ set incsearch                        " find the next match as we typing
 set hlsearch                         " highlight by default
 set ignorecase                       " ignore case when search...
 set smartcase                        " ... unless you type a Capital
+set foldopen-=search                 " don't open fold text when searching
 
 
 " ====================================== text ======================================
