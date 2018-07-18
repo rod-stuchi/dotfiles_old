@@ -280,8 +280,16 @@ fco() {
 }
 
 # gbar - list 'git branch' by author, ordered by last commit date
+# need vipe
+# brew install moreutils
+# pacman -S moreutils
 gbar() {
-  for branch in `git branch -r | grep -v HEAD`;do echo -e `git show --format="%ai %ar by %an" $branch | head -n 1` \\t$branch; done | sort -r
+  for branch in `git branch -r \
+    | grep -v HEAD`;do echo -e `git show --format="%ai %ar by %an" $branch \
+    | head -n 1` \\t$branch; done \
+    | sort -r \
+    | EDITOR='nvim +:%EasyAlign/by/ +:%EasyAlign/\t/ +:%s/\t//g +:%s/\d\{2\}:.*00// +wq' vipe \
+    | cat
 }
 
 # git branch parent, grabbed from https://gist.github.com/joechrysler/6073741
@@ -305,6 +313,49 @@ gbprune() {
 # https://stackoverflow.com/a/38404202
 gbprunef() {
   git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D
+}
+
+# fstash - easier way to deal with stashes
+# type fstash to get a list of your stashes
+# enter shows you the contents of the stash
+# ctrl-a apply a stash
+# ctrl-d shows a diff of the stash against your current HEAD
+# ctrl-b checks the stash out as a branch, for easier merging
+# ctrl-s shows the stash
+fstash() {
+  local out q k sha
+  while out=$(
+    git stash list --pretty="%C(yellow)%h %>(14)%Cgreen%cr %C(blue)%gs" |
+    fzf --ansi --no-sort --query="$q" --print-query \
+        --expect=ctrl-a,ctrl-b,ctrl-d,ctrl-s);
+  do
+    IFS=$'\n'; set -f
+    lines=($(<<< "$out"))
+    unset IFS; set +f
+    q="${lines[0]}"
+    k="${lines[1]}"
+    sha="${lines[-1]}"
+    sha="${sha%% *}"
+    [[ -z "$sha" ]] && continue
+    case "$k" in
+      ctrl-a)
+        git stash apply $sha
+      ;;
+      ctrl-b)
+        git stash branch "stash-$sha" $sha
+        break;
+      ;;
+      ctrl-d)
+        git diff $sha HEAD
+      ;;
+      ctrl-s)
+        git -c color.ui=always stash show -p $sha | less -+F
+      ;;
+      *)
+        echo "ctrl-a (apply), ctrl-b (branch), ctrl-d (diff), ctrl-s (show)"
+      ;;
+    esac
+  done
 }
 
 # grabbed from https://gist.github.com/SlexAxton/4989674
