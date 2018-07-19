@@ -194,6 +194,11 @@ set $alt Mod1
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
   bindsym $mod+Shift+r restart
 
+# Make the currently focused window a scratchpad
+  bindsym $mod+Shift+minus move scratchpad
+# Show the first scratchpad window
+  bindsym $mod+Shift+plus scratchpad show
+
 # Move to next/prev workspace on this screen
   bindsym Control+$alt+Left workspace prev_on_output
   bindsym Control+$alt+h workspace prev_on_output

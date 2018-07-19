@@ -3,7 +3,7 @@ My Arch dotfiles
 
 ### clone dotfiles
 ```console
-git clone git@github.com:rod-stuchi/dotfiles.git .dotfiles --bare --no-checkout
+git clone https://github.com/rod-stuchi/dotfiles.git .dotfiles --bare --no-checkout
 ```
 
 ### install deps
@@ -18,8 +18,11 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-# fzf
-sudo pacman -S fzf
+# On archlinux
+sudo pacman -S fzf moreutils
+
+# On macOS
+brew install fzf moreutils
 ```
 
 ## checkout configuration
