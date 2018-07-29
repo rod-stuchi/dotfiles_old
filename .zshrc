@@ -57,6 +57,9 @@ plugins=(
   z
 )
 
+# removes timeout when switching to normal mode (vi-mode)
+export KEYTIMEOUT=1
+
 source $ZSH/oh-my-zsh.sh
 . $HOME/.asdf/asdf.sh
 . $HOME/.asdf/completions/asdf.bash
@@ -398,6 +401,9 @@ trpt() {
 # bindkey '\ef' emacs-forward-word
 # bindkey '\eb' emacs-backward-word
 # commands apropos / search by commands
+
+bindkey -M vicmd "k" up-line-or-beginning-search
+bindkey -M vicmd "j" down-line-or-beginning-search
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
