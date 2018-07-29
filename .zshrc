@@ -411,5 +411,8 @@ offScreen() {
 # bindkey '\eb' emacs-backward-word
 # commands apropos / search by commands
 
+bindkey -M vicmd "k" up-line-or-beginning-search
+bindkey -M vicmd "j" down-line-or-beginning-search
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
