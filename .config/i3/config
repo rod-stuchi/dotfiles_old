@@ -68,6 +68,7 @@ set $alt Mod1
 
 # start a terminal
   bindsym $mod+Return exec termite
+  bindsym $mod+Shift+Return exec termite --class infloatmode
 
 # kill focused window
   bindsym $mod+Shift+q kill
@@ -110,7 +111,7 @@ set $alt Mod1
   bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
-  bindsym $mod+Shift+space floating toggle, exec i3-msg resize set 40 ppt 40 ppt, move position center
+  bindsym $mod+Shift+space floating toggle, exec i3-msg resize set 25 ppt 30 ppt, move position center
 
   # workspace_auto_back_and_forth yes
   # bindsym $alt+tab workspace back_and_forth
@@ -171,6 +172,7 @@ set $alt Mod1
 
 # Custom window
   for_window [class=.*] border pixel 2
+  for_window [class="infloatmode"] floating enable
   for_window [class="Enpass-Desktop"] floating enable
   for_window [class="Pavucontrol"] floating enable
   for_window [class="Arandr"] floating enable
@@ -275,10 +277,10 @@ client.placeholder      $base00 $base00 $base05 $base00 $base00
 client.background       $base07
 # lock screen
   #bindsym $mod+Shift+x exec $HOME/.config/i3/lockfull
-  bindsym $mod+Shift+x exec --no-startup-id xautolock -locknow
+  # bindsym $mod+Shift+x exec --no-startup-id xautolock -locknow
 
 # sticky floating window to show in all workspaces
-  bindsym $mod+shift+a sticky toggle
+  bindsym $mod+a sticky toggle
 
 # printscreen
   bindsym Print exec spectacle -r
@@ -320,10 +322,9 @@ client.background       $base07
   #exec --no-startup-id nm-applet
 
 # Set Wallpaper
-  exec_always feh --bg-scale ~/.config/i3/pictures/default.jpg 
+  exec_always feh --bg-scale ~/.config/i3/pictures/9gc8t3eza0c11.png
 
 # Fade transitions
   #exec compton -f
 
-  exec i3-msg restart
-
+exec i3-msg restart
