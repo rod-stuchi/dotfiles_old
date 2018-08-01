@@ -321,11 +321,18 @@ gbprunef() {
 # fstash - easier way to deal with stashes
 # type fstash to get a list of your stashes
 # enter shows you the contents of the stash
-# ctrl-a apply a stash
-# ctrl-d shows a diff of the stash against your current HEAD
-# ctrl-b checks the stash out as a branch, for easier merging
-# ctrl-s shows the stash
 fstash() {
+  if [[ ("$1" == "-h") || ("$1" == "--help") ]]; then
+    echo "
+ --help, -h     show this help
+ CTRL-A         apply a stash
+ CTRL-D         shows a diff of the stash against your current HEAD
+ CTRL-B         checks the stash out as a branch, for easier merging
+ CTRL-S         shows the stash
+"
+    return 0
+  fi
+
   local out q k sha
   while out=$(
     git stash list --pretty="%C(yellow)%h %>(14)%Cgreen%cr %C(blue)%gs" |
