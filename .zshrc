@@ -186,6 +186,10 @@ rodsTrueColor() {
   curl -s https://raw.githubusercontent.com/JohnMorales/dotfiles/master/colors/24-bit-color.sh | bash
 }
 
+rodsTestNerdFonts() {
+  curl -s https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/bin/scripts/test-fonts.sh | bash
+}
+
 rodsCopyFromTo () {
   rsync -ai --chmod u=rw,go=r "$1" "$2" | pv -ls $(find "$1" -type f | wc -l) > /dev/null
 }
@@ -386,7 +390,8 @@ gifify() {
 # Easy extract one file from zip, rar, 7z files
 7z1() {
   if [[ ! -z $1 ]] then
-    7z l $1 | tail -n +19 | fzf --height 50% --reverse | awk '{print $6}' | xargs -i{} 7z e $1 "{}"
+    # 7z l $1 | tail -n +19 | fzf --height 50% --reverse | awk '{print $6}' | xargs -i{} 7z e $1 "{}"
+    7z l $1 | tail -n +19 | fzf --height 50% --reverse | awk '{$1=$2=$3=$4=$5=""; print $0}' | xargs -i{} 7z e $1 "{}"
   else
     echo "invalid argument"
   fi
@@ -402,6 +407,10 @@ tren() {
 # trpt ele come maças
 trpt() {
   trans -b pt:en "$*"
+}
+
+offScreen() {
+  sleep 2 && xset -display :0.0 dpms force off
 }
 
 # https://unix.stackexchange.com/questions/106375/make-zsh-alt-f-behave-like-emacs-alt-f
