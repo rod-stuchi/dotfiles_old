@@ -229,8 +229,8 @@ fgd() {
 FZF-EOF"
 }
 
-# fgd - git diff HEAD~X..HEAD~Y
-fgdh() {
+# fdh - git diff HEAD~X..HEAD~Y
+fdh() {
   git diff --name-only HEAD~$1..HEAD~$2 |
   fzf --ansi --sort --reverse --bind=ctrl-s:toggle-sort \
       --bind "ctrl-m:execute:
@@ -238,9 +238,25 @@ fgdh() {
                 {}
 FZF-EOF"
 }
+# fdbh = Fuzzy git Diff Branch..HEAD
+fdbh() {
+  branch="master"
+  if [[ ! (-z $1) ]] then
+    branch=$1
+  fi
 
-# fgd - git diff cached (in stage)
-fgdc() {
+  git --no-pager diff --color=always --stat=120 $branch..\
+    | fzf --ansi --multi --reverse --border \
+    --header "[tab] select, [enter] diff
+[ctrl+a] select all, [ctrl+x] deselect all" \
+    --bind "ctrl-a:select-all,ctrl-x:deselect-all,esc:cancel" \
+    --bind "enter:execute:
+        (echo {+} | sed -E 's/\|[^+]+[-+]+//g' | sed -E 's/  +/ /g' | xargs git diff $branch.. ) << 'FZF-EOF'
+FZF-EOF"
+}
+
+# fdc - git diff cached (in stage)
+fdc() {
   git --no-pager diff --cached --name-only |
   fzf --ansi --sort --reverse --bind=ctrl-s:toggle-sort \
       --bind "ctrl-m:execute:
@@ -287,9 +303,9 @@ fco() {
 }
 
 # gbar - list 'git branch' by author, ordered by last commit date
-# need vipe
-# brew install moreutils
-# pacman -S moreutils
+# need vipe, nvim, easyalign
+# brew install moreutils, neovim
+# pacman -S moreutils, neovim
 gbar() {
   for branch in `git branch -r \
     | grep -v HEAD`;do echo -e `git show --format="%ai %ar by %an" $branch \
