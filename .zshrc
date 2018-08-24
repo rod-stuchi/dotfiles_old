@@ -208,10 +208,10 @@ weather () {
 }
 
 rodsFTP () {
-  echo ftp://192.168.2.0.2
+  echo ftp://192.168.0.5
   echo user: rods
   echo pass: 123
-  sudo python -m pyftpdlib -w -p 21 -i 192.168.0.2 -u rods -P 123
+  sudo python -m pyftpdlib -w -p 21 -i 192.168.0.5 -u rods -P 123
 }
 
 # fv - open file in neovim
