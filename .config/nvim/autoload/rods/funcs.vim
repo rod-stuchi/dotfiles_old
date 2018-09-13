@@ -26,6 +26,12 @@ function! rods#funcs#linewidth2 ()
   match ColorColumn /\%101v/
 endfunction
 
+" more colors
+" http://vim.wikia.com/wiki/Xterm256_color_names_for_console_Vim
+function! rods#funcs#highlights ()
+  highlight breakSpace ctermfg=46 guifg=#00ff00
+  match breakSpace /\%xa0/
+endfunction
 
 function! rods#funcs#ToggleMouse()
   " check if mouse is enabled

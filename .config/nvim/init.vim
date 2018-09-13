@@ -47,7 +47,8 @@ set nowrap                           " no wrap text
 set showbreak=↪                      " when wrapping is enable
 set encoding=utf-8                   " set text unicode
 set list                             " for invisible characters, like tab, space
-set listchars=tab:›\ ,trail:∙,eol:↲  " show invisible characters
+" show invisible characters
+set listchars=tab:›\ ,trail:∙,eol:↲,nbsp:␣
 set textwidth=0                      " no limit, disable text width
 set iskeyword+=-                     " makes this-is-a-word a word
 set scrolloff=8                      " 8 lines away from margins
@@ -136,6 +137,7 @@ colorscheme onedark
 " ===================================== autocmds ===================================
 autocmd FileType vim,zsh,bash silent! call rods#funcs#fold_comments()
 autocmd FileType javascript,elixir call rods#funcs#linewidth2()
+autocmd FileType * call rods#funcs#highlights()
 autocmd FileType git set nofoldenable
 
 " save cursor/scroll position when switching between buffers
