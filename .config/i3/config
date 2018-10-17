@@ -41,10 +41,13 @@ set $alt Mod1
   exec xcompmgr -c -f -D 5 -n
 
 # Increase mouse wheel
-  #exec imwheel -b 45
+  # exec imwheel -b 45
 
 # KDE Klipper (clipboard manager)
-  exec XDG_CURRENT_DESKTOP=gnome klipper
+  # exec XDG_CURRENT_DESKTOP=gnome klipper
+
+# Turns off monitor with 5 minutes
+  exec xset 0 0 300
 
 # Dunst desktop notifications
   exec --no-startup-id dunst -config $HOME/.config/dunst/dunstrc
@@ -67,11 +70,13 @@ set $alt Mod1
   floating_modifier $mod
 
 # start a terminal
-  bindsym $mod+Return exec termite
-  bindsym $mod+Shift+Return exec termite --class infloatmode
+  # bindsym $mod+Return exec termite
+  # bindsym $mod+Shift+Return exec termite --class infloatmode
+  bindsym $mod+Return exec konsole
+  bindsym $mod+Shift+Return exec konsole -name infloatmode
 
 # kill focused window
-  bindsym $mod+Shift+q kill
+  bindsym $mod+q kill
 
 # start rofi (a program launcher)
   bindsym $mod+d exec "rofi -modi drun,run,window -show run -config ~/.config/rofi.conf"
@@ -111,7 +116,7 @@ set $alt Mod1
   bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
-  bindsym $mod+Shift+space floating toggle, exec i3-msg resize set 25 ppt 30 ppt, move position center
+  bindsym $mod+Shift+space floating toggle, exec i3-msg resize set 30 ppt 40 ppt, move position center
 
   # workspace_auto_back_and_forth yes
   # bindsym $alt+tab workspace back_and_forth
@@ -173,6 +178,8 @@ set $alt Mod1
 # Custom window
   for_window [class=.*] border pixel 2
   for_window [class="infloatmode"] floating enable
+  for_window [instance="^infloatmode$"] floating enable
+  for_window [instance="^infloatmode$"] exec i3-msg resize set 30 ppt 40 ppt, move position center
   for_window [class="Enpass-Desktop"] floating enable
   for_window [class="Pavucontrol"] floating enable
   for_window [class="Arandr"] floating enable
@@ -197,9 +204,9 @@ set $alt Mod1
   bindsym $mod+Shift+r restart
 
 # Make the currently focused window a scratchpad
-  bindsym $mod+Shift+minus move scratchpad
+  bindsym XF86AudioPrev move scratchpad
 # Show the first scratchpad window
-  bindsym $mod+Shift+plus scratchpad show
+  bindsym XF86AudioNext scratchpad show
 
 # Move to next/prev workspace on this screen
   bindsym Control+$alt+Left workspace prev_on_output
@@ -283,11 +290,12 @@ client.background       $base07
   bindsym $mod+a sticky toggle
 
 # printscreen
-  bindsym Print exec spectacle -r
+  # bindsym Print exec spectacle -r
+  bindsym --release Print exec scrot -sb /tmp/copyshot.png && xclip -selection clipboard -t image/png /tmp/copyshot.png
 
 # Pulse Audio controls
-#  bindsym XF87AudioRaiseVolume exec --no-startup-id pulseaudio-ctl up 10 &! pkill -RTMIN+15 i3blocks 
-#  bindsym XF87AudioLowerVolume exec --no-startup-id pulseaudio-ctl down 10 &! pkill -RTMIN+15 i3blocks 
+#  bindsym XF87AudioRaiseVolume exec --no-startup-id pulseaudio-ctl up 10 &! pkill -RTMIN+15 i3blocks
+#  bindsym XF87AudioLowerVolume exec --no-startup-id pulseaudio-ctl down 10 &! pkill -RTMIN+15 i3blocks
 #  bindsym XF87AudioMute        exec --no-startup-id pulseaudio-ctl mute &! pkill -RTMIN+15 i3blocks
   bindsym --release XF86AudioRaiseVolume exec pulseaudio-ctl up   && pkill -SIGRTMIN+10 i3blocks # increase sound volume by 5%
   bindsym --release XF86AudioLowerVolume exec pulseaudio-ctl down && pkill -SIGRTMIN+10 i3blocks # decrease sound volume by 5%

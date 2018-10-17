@@ -14,6 +14,8 @@ esac
 [ -d $ANDROID_HOME/platform-tools ]                 && export PATH=$PATH:$ANDROID_HOME/platform-tools
 [ -d $HOME/.rvm/bin ]                               && export PATH="$PATH:$HOME/.rvm/bin"
 [ -d $HOME/.config/yarn/global/node_modules/.bin ]  && export PATH="$PATH:$HOME/.config/yarn/global/node_modules/.bin"
+# $ yarnn global bin
+[ -d $HOME/.asdf/installs/nodejs/8.9.4/.npm/bin ]   && export PATH="$PATH:$HOME/.asdf/installs/nodejs/8.9.4/.npm/bin"
 [ -d $HOME/.gem/ruby/2.5.0/bin ]                    && export PATH="$PATH:$HOME/.gem/ruby/2.5.0/bin"
 
 export MANPAGER="nvim -c 'set ft=man' -"
@@ -91,7 +93,7 @@ if [ -d $ANDROID_HOME/emulator ]; then
   alias emulator-avds="$ANDROID_HOME/emulator/emulator -list-avds"
 fi
 alias ggit="/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
-alias gitroot="/usr/bin/git --git-dir=$HOME/.gitroot --work-tree=/"
+alias gitroot="/usr/bin/git --git-dir=/home/rods/.gitroot --work-tree=/"
 alias ld="ls -d */"
 alias lld="ls -ld */"
 
@@ -173,7 +175,7 @@ if [[ `uname` == "Linux" ]] then
   # cat /sys/class/power_supply/BAT0/power_now | awk '{print $1*10^-6 " W"}'
 fi
 
-alias rodsFindDup="find . -type f -print0 | xargs -0 md5sum | sort | uniq -w32 --all-repeated=separate"
+alias rodsFindDup="find . -type f -print0 | xargs -0 sha1sum | sort | uniq -w32 --all-repeated=separate"
 alias rodsvideo-720p="youtube-dl -f 'bestvideo[height<=720]+bestaudio/best[height<=720]' -o '%(title)s.%(ext)s' "
 alias vim="nvim"
 
@@ -208,10 +210,11 @@ weather () {
 }
 
 rodsFTP () {
-  echo ftp://192.168.0.5
+  currentIP=$(hostname -i | awk '{ print $1 }')
+  echo $currentIP
   echo user: rods
   echo pass: 123
-  sudo python -m pyftpdlib -w -p 21 -i 192.168.0.5 -u rods -P 123
+  sudo python -m pyftpdlib -w -p 21 -i $currentIP -u rods -P 123
 }
 
 # fv - open file in neovim
@@ -436,6 +439,11 @@ ranger() {
   else
     exit
   fi
+}
+
+setDns() {
+  sudo resolvconf -x -a "wlp3s0.dhcp" < .dnsservers
+  resolvconf -l
 }
 
 # https://unix.stackexchange.com/questions/106375/make-zsh-alt-f-behave-like-emacs-alt-f
