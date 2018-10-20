@@ -442,7 +442,7 @@ ranger() {
 }
 
 setDns() {
-  sudo resolvconf -x -a "wlp3s0.dhcp" < .dnsservers
+  sudo resolvconf -x -a "wlp3s0.dhcp" < ~/.dnsservers
   resolvconf -l
 }
 
