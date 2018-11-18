@@ -22,6 +22,7 @@ export MANPAGER="nvim -c 'set ft=man' -"
 export EDITOR=nvim
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
+export RANGER_LOAD_DEFAULT_RC=FALSE
 
 export FZF_DEFAULT_COMMAND='rg --files --hidden --smart-case --no-messages --follow --glob "!.git" --glob "!node_modules"'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
