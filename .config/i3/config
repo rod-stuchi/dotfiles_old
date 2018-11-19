@@ -81,6 +81,7 @@ set $alt Mod1
 # start rofi (a program launcher)
   # bindsym $mod+d exec "rofi -modi drun,run,window -show drun -with 30 -padding 10 -theme ~/.config/rofi/theme.rasi"
   bindsym $mod+space exec "rofi -modi drun,run,window -show drun -width 40 -no-cycle -padding 10 -show-icons -theme ~/.config/rofi/theme.rasi"
+  bindsym $mod+Shift+space exec "$HOME/.scripts/emoji/rofi-emoji.sh"
 
 # change focus
   bindsym $mod+h focus left
