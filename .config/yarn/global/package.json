@@ -1,15 +1,19 @@
 {
   "dependencies": {
     "bower": "^1.8.4",
+    "browser-sync": "^2.24.6",
     "code-push-cli": "^2.1.8",
     "cpfcnpj-cli": "^0.0.1",
     "flow-language-server": "^0.6.0",
     "javascript-typescript-langserver": "^2.10.0",
-    "js.inspect": "^0.0.13",
+    "js.inspect": "^0.0.23",
+    "local-web-server": "^2.6.0",
     "neovim": "^4.2.1",
+    "node-cpf-cli": "^1.0.3",
     "nodemon": "^1.17.5",
     "oid-cli": "^1.0.3",
     "prettier": "^1.13.7",
-    "react-native-cli": "^2.0.1"
+    "react-native-cli": "^2.0.1",
+    "uuid": "^3.3.2"
   }
 }

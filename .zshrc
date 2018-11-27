@@ -2,16 +2,19 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 case `uname` in
   Darwin)
-    export ANDROID_HOME=~/Library/Android/sdk/
+    # export ANDROID_HOME=~/Library/Android/sdk/
+    export ANDROID_SDK_ROOT=~/Library/Android/sdk/
   ;;
   Linux)
-    export ANDROID_HOME=/disks/1TB/android/android-sdk
+    # export ANDROID_HOME=/disks/1TB/android/android-sdk
+    export ANDROID_SDK_ROOT=~/Library/Android/sdk/
   ;;
 esac
 
 [ -d ~/.asdf/installs/nodejs/8.9.4/.npm/bin ]       && export PATH=~/.asdf/installs/nodejs/8.9.4/.npm/bin:$PATH
-[ -d $ANDROID_HOME/tools ]                          && export PATH=$PATH:$ANDROID_HOME/tools
-[ -d $ANDROID_HOME/platform-tools ]                 && export PATH=$PATH:$ANDROID_HOME/platform-tools
+[ -d $ANDROID_SDK_ROOT/tools ]                      && export PATH=$PATH:$ANDROID_SDK_ROOT/tools
+[ -d $ANDROID_SDK_ROOT/tools/bin ]                  && export PATH=$PATH:$ANDROID_SDK_ROOT/tools/bin
+[ -d $ANDROID_SDK_ROOT/platform-tools ]             && export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
 [ -d $HOME/.rvm/bin ]                               && export PATH="$PATH:$HOME/.rvm/bin"
 [ -d $HOME/.config/yarn/global/node_modules/.bin ]  && export PATH="$PATH:$HOME/.config/yarn/global/node_modules/.bin"
 [ -d $HOME/.gem/ruby/2.5.0/bin ]                    && export PATH="$PATH:$HOME/.gem/ruby/2.5.0/bin"
@@ -208,10 +211,10 @@ weather () {
 }
 
 rodsFTP () {
-  echo ftp://192.168.2.0.3
+  echo ftp://192.168.2.0.4
   echo user: rods
   echo pass: 123
-  sudo python -m pyftpdlib -w -p 21 -i 192.168.0.3 -u rods -P 123
+  sudo python -m pyftpdlib -w -p 21 -i 192.168.0.4 -u rods -P 123
 }
 
 # fv - open file in neovim
