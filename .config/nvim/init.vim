@@ -64,7 +64,7 @@ set shiftwidth=2
 set expandtab
 set backspace=indent,eol,start       " backspace through everything in insert mode
 set autoindent                       " automatically indent new lines
-" set smartindent                    " automatically set the indent of a new line
+" set smartindent                      " automatically set the indent of a new line
 
 
 " change leader to ',' because the backslash is too far away
@@ -93,6 +93,7 @@ call plug#begin('~/.local/share/nvim/plugged')
   " Plug 'dhruvasagar/vim-table-mode'
   " Plug 'dhruvasagar/vim-vinegar' " for nerdtree
   " Plug 'fleischie/vim-styled-components'
+
   Plug 'Asheq/close-buffers.vim'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'SirVer/ultisnips'

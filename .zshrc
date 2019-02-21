@@ -4,6 +4,8 @@ case `uname` in
   Darwin)
     # export ANDROID_HOME=~/Library/Android/sdk/
     export ANDROID_SDK_ROOT=~/Library/Android/sdk/
+    export GOPATH=$HOME/go
+    export GOBIN=$GOPATH/bin
   ;;
   Linux)
     # export ANDROID_HOME=/disks/1TB/android/android-sdk
@@ -18,6 +20,7 @@ esac
 [ -d $HOME/.rvm/bin ]                               && export PATH="$PATH:$HOME/.rvm/bin"
 [ -d $HOME/.config/yarn/global/node_modules/.bin ]  && export PATH="$PATH:$HOME/.config/yarn/global/node_modules/.bin"
 [ -d $HOME/.gem/ruby/2.5.0/bin ]                    && export PATH="$PATH:$HOME/.gem/ruby/2.5.0/bin"
+
 
 export MANPAGER="nvim -c 'set ft=man' -"
 export EDITOR=nvim
@@ -95,6 +98,9 @@ if [ -d $ANDROID_HOME/emulator ]; then
 fi
 alias ggit="/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 alias gitroot="/usr/bin/git --git-dir=$HOME/.gitroot --work-tree=/"
+alias gllog="git log --pretty=\"format:%C(auto,yellow)%h%C(auto,magenta)% G? %C(auto,blue)%>(12,trunc)%ad %C(auto,green)%<(17,trunc)%aN%C(auto,reset)%s%C(auto,red)\""
+alias glllog="git log --pretty=\"format:%C(auto,yellow)%h%C(auto,magenta)% G? %C(auto,blue)%>(12,trunc)%ad %C(auto,green)%<(17,trunc)%aN%C(auto,reset)%s%C(auto,red)% gD% D\""
+alias gtr="git --no-pager tag --sort=-creatordate"
 alias ld="ls -d */"
 alias lld="ls -ld */"
 
