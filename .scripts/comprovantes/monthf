@@ -1,0 +1,34 @@
+#!/bin/bash
+
+if [[ ! -z "$1" ]]; then
+  _year=$1
+  if [[ "${#_year}" -eq 4 ]]; then
+    year=$_year
+    shift 1
+  else
+    year=$(date +%Y)
+  fi
+
+   month=$1
+else
+  year=$(date +%Y)
+  month=$(date +%m)
+fi
+
+find /disks/W/Financeiro -regex ".*`printf %d $year`[-._]?`printf %02d $((10#$month))`.*_\.\(pdf\|html\|jpg\|png\)" |
+  awk 'BEGIN {
+    FS = "\\n"
+    RS = ""
+  };
+  {
+    for (i=1; i<=NF; i++) {
+      print " 💸 \033[38;5;63m" $i "\033[0m"
+    }
+  }' $2 \
+  | fzf --ansi --layout=reverse \
+  --preview='pdftotext "$(echo {+} | cut -c 7-)" -' \
+  --header='ctrl+d: down preview, ctrl+u: up preview, esc: clean' \
+  --bind='ctrl-d:preview-page-down,ctrl-u:preview-page-up' \
+  --bind='esc:cancel' \
+  --bind='right:execute(zathura "$(echo {+} | cut -c 7-)" & disown)' \
+  --bind='enter:execute(zathura "$(echo {+} | cut -c 7-)" & disown)'

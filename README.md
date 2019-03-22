@@ -42,3 +42,32 @@ ggit checkout {master|macos} .config/nvim
 ```console
 ggit config --local status.showUntrackedFiles no
 ```
+
+## Usefull blended commands
+
+Add permission to ImageMagic to generate thumbnails from PDF files
+
+```console
+sudo sed -ie 's/rights="none"/rights="all"/' /etc/ImageMagick-7/policy.xml
+convert -thumbnail x300 -background white -alpha remove "{file}.pdf[0]" "{file}_thumb.png"
+```
+
+Remove files not in use, when it can not find any reference
+
+```console
+ls PATH | xargs -L1 -I{} sh -c 'rg -q {} *.md; if [[ $? != 0 ]]; then rm PATH/{}; fi'
+```
+
+Compress with XZ (better compression level) with progress
+```console
+tar cpf - _*.json | pv -pbrt -s $(du -shc *.json | cut -f1 | tail -n1) | xz -9 > archive.tar.xz
+```
+To list content of file
+```console
+tar tvf archive.tar.xz
+```
+
+To see the compress rate
+```console
+xz -l archive.tar.xz
+```

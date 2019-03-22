@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 if [ -z "$1" ]; then
    month=$(date +%m) 
@@ -7,7 +8,7 @@ else
 fi
 
 __fname=`printf %d $(date +%Y)`.`printf %02d $((10#$month))`.pdf
-_file="/disks/W/Financeiro/Contas de Consumo/ComGas/faturas/$__fname"
+_file="/disks/W/Financeiro/Contas de Consumo/ComGas/faturas/$(date +%Y)/$__fname"
 
 if [ ! -f "$_file" ]; then
   echo -e "\n No such file: \033[38;5;124m" $_file "\033[0m\n"

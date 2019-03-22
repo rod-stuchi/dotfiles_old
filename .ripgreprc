@@ -1,0 +1,9 @@
+--hidden
+--smart-case
+--follow
+--glob=!.git/*
+--glob=!node_modules/*
+--glob=!.tags
+--type-add
+web:*.{html,css,js,ts,scss}*
+

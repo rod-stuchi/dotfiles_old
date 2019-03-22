@@ -1,14 +1,23 @@
 #!/bin/bash
 
-if [ -z "$1" ]; then
-   month=$(date +%m) 
-else
+if [[ ! -z "$1" ]]; then
+  _year=$1
+  if [[ "${#_year}" -eq 4 ]]; then
+    year=$_year
+    shift 1
+  else
+    year=$(date +%Y)
+  fi
+
    month=$1
+else
+  year=$(date +%Y)
+  month=$(date +%m)
 fi
 
-find /disks/W/Financeiro -regex ".*`printf %d $(date +%Y)`[-._]?`printf %02d $((10#$month))`.*_\.\(pdf\|html\|jpg\|png\)" |
-  awk 'BEGIN { 
-    FS = "\\n" 
+find /disks/W/Financeiro -regex ".*`printf %d $year`[-._]?`printf %02d $((10#$month))`.*_\.\(pdf\|html\|jpg\|png\)" |
+  awk 'BEGIN {
+    FS = "\\n"
     RS = ""
   };
   {

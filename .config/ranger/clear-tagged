@@ -1,0 +1,13 @@
+#! /bin/bash
+sed -e "s/^\(..\)\//\//" tagged | xargs -0 -d$'\n' -L1 -I{} sh -c '[[ ! -e "{}" ]] && echo "NOT >> {}"' > _NOT
+sed -e "s/^\(..\)\//\//" tagged | xargs -0 -d$'\n' -L1 -I{} sh -c '[[ -e "{}" ]] && echo "YES >> {}"' > _YES
+
+# function removePath(){
+#   if [[ ! -e "$1" ]]; then
+#     echo "NOT >> $1"
+#     sed -i -e "s#$1#-----#g" tagged2
+#   fi 
+# }
+# export -f removePath
+#
+# sed -e "s/^\(..\)\//\//" tagged2 | xargs -0 -d$'\n' -L1 -I{} bash -c 'removePath "{}"'

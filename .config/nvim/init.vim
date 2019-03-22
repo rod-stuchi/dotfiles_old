@@ -47,7 +47,8 @@ set nowrap                           " no wrap text
 set showbreak=↪                      " when wrapping is enable
 set encoding=utf-8                   " set text unicode
 set list                             " for invisible characters, like tab, space
-set listchars=tab:›\ ,trail:∙,eol:↲  " show invisible characters
+" show invisible characters
+set listchars=tab:›\ ,trail:∙,eol:↲,nbsp:␣
 set textwidth=0                      " no limit, disable text width
 set iskeyword+=-                     " makes this-is-a-word a word
 set scrolloff=8                      " 8 lines away from margins
@@ -107,13 +108,14 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'justinj/vim-react-snippets'
   Plug 'justinmk/vim-sneak'
   Plug 'ludovicchabant/vim-gutentags'
+  Plug 'machakann/vim-highlightedyank'
   Plug 'mattn/emmet-vim'
   Plug 'maxmellon/vim-jsx-pretty'
   Plug 'mxw/vim-jsx'
   Plug 'neomake/neomake'
   Plug 'pangloss/vim-javascript'
   Plug 'ryanoasis/vim-devicons'
-  Plug 'scrooloose/nerdtree' ", { 'on': 'NERDTreeToggle' }
+  Plug 'scrooloose/nerdtree', " { 'on': 'NERDTreeToggle' }
   Plug 'slashmili/alchemist.vim'
   Plug 'tomasr/molokai'
   Plug 'tomtom/tcomment_vim'
@@ -136,6 +138,7 @@ colorscheme onedark
 " ===================================== autocmds ===================================
 autocmd FileType vim,zsh,bash silent! call rods#funcs#fold_comments()
 autocmd FileType javascript,elixir call rods#funcs#linewidth2()
+autocmd FileType * call rods#funcs#highlights()
 autocmd FileType git set nofoldenable
 
 " save cursor/scroll position when switching between buffers
@@ -159,3 +162,21 @@ autocmd FileType make setlocal noexpandtab
 " nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 " nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
+
+" Remove diacritical signs from characters in specified range of lines.
+" Examples of characters replaced: á -> a, ç -> c, Á -> A, Ç -> C.
+" Uses substitute so changes can be confirmed.
+function! s:RemoveDiacritics(line1, line2)
+  let diacs = 'áâãàçéêíóôõüú'  " lowercase diacritical signs
+  let repls = 'aaaaceeiooouu'  " corresponding replacements
+  let diacs .= toupper(diacs)
+  let repls .= toupper(repls)
+  let diaclist = split(diacs, '\zs')
+  let repllist = split(repls, '\zs')
+  let trans = {}
+  for i in range(len(diaclist))
+    let trans[diaclist[i]] = repllist[i]
+  endfor
+  execute a:line1.','.a:line2 . 's/['.diacs.']/\=trans[submatch(0)]/gIce'
+endfunction
+command! -range=% RemoveDiacritics call s:RemoveDiacritics(<line1>, <line2>)

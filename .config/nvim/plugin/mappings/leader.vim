@@ -34,3 +34,12 @@ nnoremap <silent> <Leader>k :call fzf#vim#marks()<CR>
 " map <enter> ;noh<CR>
 nnoremap <leader>c :noh<CR>
 
+function! ComputeMD5(str)
+  echo str
+  let out = system('md5sum |cut -b 1-32', a:str)
+  " Remove trailing newline.
+  let out = substitute(out, '\n$', '', '')
+  echo out
+  return out
+endfunction
+vnoremap <silent> <Leader>T :call ComputeMD5(@*)<CR>

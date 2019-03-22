@@ -1,5 +1,9 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+# zsh: do not save in history when starts with space
+setopt HIST_IGNORE_SPACE
+
 case `uname` in
   Darwin)
     export ANDROID_HOME=~/Library/Android/sdk/
@@ -17,6 +21,7 @@ esac
 # $ yarnn global bin
 [ -d $HOME/.asdf/installs/nodejs/8.9.4/.npm/bin ]   && export PATH="$PATH:$HOME/.asdf/installs/nodejs/8.9.4/.npm/bin"
 [ -d $HOME/.gem/ruby/2.5.0/bin ]                    && export PATH="$PATH:$HOME/.gem/ruby/2.5.0/bin"
+[ -x "$(command -v rg)" ]                           && export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
 
 export MANPAGER="nvim -c 'set ft=man' -"
 export EDITOR=nvim
@@ -104,10 +109,13 @@ if [ -d ~/.scripts ]; then
   alias rodsComGasFatura='~/.scripts/comgas/fatura'
   alias rodsCpAll='~/.scripts/comprovantes/all'
   alias rodsCpMonth='~/.scripts/comprovantes/month'
+  alias rodsCpMonthF='~/.scripts/comprovantes/monthf'
   alias rodsNetFatura='~/.scripts/net/fatura'
   alias rodsNubankFatura='~/.scripts/nubank/fatura'
   alias rodsSubmarinoDec='~/.scripts/submarino/decrypt'
   alias rodsSubmarinoFatura='~/.scripts/submarino/fatura'
+  alias xmovsub="~/.scripts/xmovsub.sh"
+  alias xmovdir="~/.scripts/xmovdir.sh"
 fi
 
 if [[ `uname` == "Linux" ]] then
@@ -129,6 +137,14 @@ if [[ `uname` == "Linux" ]] then
 
   rodsPacDependsOn() {
     pacman -Si "$1" | awk -F'[:<=>]' '/^Depends/ {print $2}' | xargs -n1 | sort -u
+  }
+
+  rodsMicStaticVolume() {
+    VOLP=30
+    [[ ! -z $1 ]] && VOLP=$1
+    VOLV=$(($VOLP * 65530 / 100))
+    # ref link: https://askubuntu.com/a/829996
+    while sleep 0.02; do pacmd set-source-volume alsa_input.pci-0000_00_1b.0.analog-stereo $VOLV; done
   }
 
   rodsColor () {
@@ -168,16 +184,40 @@ if [[ `uname` == "Linux" ]] then
   }
 
   dockerstatus() {
-    docker ps | awk '{if(NR>1) print $NF}'|xargs docker stats
+    docker ps | awk '{if(NR>1) print $NF}'| xargs docker stats
   }
 
   copy(){ echo -n "$1" | xclip -selection clipboard }
+
+  # function for QRCode
+  [[ -f ~/.scripts/qrcode.sh ]]          && source ~/.scripts/qrcode.sh
+  # function to backup histories
+  [[ -f ~/.scripts/sync-histories.sh ]]  && source ~/.scripts/sync-histories.sh
+  # function to connect throught VPN
+  [[ -f ~/VPN/CyberGhost/vpn.sh  ]]      && source ~/VPN/CyberGhost/vpn.sh
+
+  favicon() {
+    # based on https://superuser.com/a/40629
+    BASE=`basename "$1" .png`
+
+    for size in {16,32,48,64}
+    do
+      echo "converting.. " "$size"x"$size"
+      convert "$1" -thumbnail "$size"x"$size" "${BASE}_$size.png"
+    done
+
+    icotool -c -o "${BASE}.ico" "${BASE}"_{16,32,48,64}.png
+
+    echo "removing >" "${BASE}"_{16,32,48,64}.png
+    rm -f  "${BASE}"_{16,32,48,64}.png
+  }
   # get battery whatts consumption
   # cat /sys/class/power_supply/BAT0/power_now | awk '{print $1*10^-6 " W"}'
 fi
 
 alias rodsFindDup="find . -type f -print0 | xargs -0 sha1sum | sort | uniq -w32 --all-repeated=separate"
-alias rodsvideo-720p="youtube-dl -f 'bestvideo[height<=720]+bestaudio/best[height<=720]' -o '%(title)s.%(ext)s' "
+alias rodsvideo-720p="youtube-dl -f 'bestvideo[height<=720]+bestaudio/best[height<=720]' --merge-output-format mkv -o '%(title)s.[ac.%(acodec)s].[vc.%(vcodec)s].%(ext)s' "
+alias rodsvideo-1080p="youtube-dl -f 'bestvideo[height<=1080]+bestaudio/best[height<=1080]' --merge-output-format mkv -o '%(title)s.[ac.%(acodec)s].[vc.%(vcodec)s].%(ext)s' "
 alias vim="nvim"
 
 # functions
@@ -410,8 +450,10 @@ gifify() {
 # Easy extract one file from zip, rar, 7z files
 7z1() {
   if [[ ! -z $1 ]] then
-    # 7z l $1 | tail -n +19 | fzf --height 50% --reverse | awk '{print $6}' | xargs -i{} 7z e $1 "{}"
-    7z l $1 | tail -n +19 | fzf --height 50% --reverse | awk '{$1=$2=$3=$4=$5=""; print $0}' | xargs -i{} 7z e $1 "{}"
+    # 7z l $1 | tail -n +19 | fzf --height 50% --reverse | awk '{$1=$2=$3=$4=$5=""; print $0}' | xargs -i{} 7z e $1 "{}"
+    7z l $1 | rg "\d{4}-\d{2}-\d{2}" | awk '{$1=$2=$3=$5=""; print $0}' | fzf --height 50% --reverse | \
+      awk '{$1=""; print $0}' | \
+      xargs -i{} 7z e $1 "{}"
   else
     echo "invalid argument"
   fi
@@ -445,6 +487,26 @@ ranger() {
 setDns() {
   sudo resolvconf -x -a "wlp3s0.dhcp" < ~/.dnsservers
   resolvconf -l
+}
+
+pdfrange() {
+  if [[ -z $1 ]]; then
+    echo "usage:
+
+      pdfrange file range
+
+      $ pdfrange file.pdf 1-4
+    "
+    return 0
+  fi
+
+  basename=$(basename $1 .pdf)
+  qpdf $1 --pages $1 $2 -- $(echo $basename"_out.pdf")
+}
+
+dec2hexTrans () {
+  value=$( [[ -z $1 ]] && echo "50" || echo $1 )
+  printf '%X\n' $(($value  * 255 / 100))
 }
 
 # https://unix.stackexchange.com/questions/106375/make-zsh-alt-f-behave-like-emacs-alt-f

@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 if [ -z "$1" ]; then
    month=$(date +%m) 
@@ -6,8 +7,8 @@ else
    month=$1  
 fi
 
-__fname=`printf %d $(date +%Y)`.`printf %02d $((10#$month))`.pdf
-_file="/disks/W/Financeiro/Contas de Consumo/NET VIRTUA/fatura/$__fname"
+__fname=`printf %d $(date +%Y)``printf %02d $((10#$month))`.pdf
+_file="/disks/W/Financeiro/Contas de Consumo/NET COMBO/fatura/$__fname"
 
 if [ ! -f "$_file" ]; then
   echo -e "\n No such file: \033[38;5;124m" $_file "\033[0m\n"
@@ -23,7 +24,7 @@ else
       RS = ""
     };
     {
-      print "\n\033[38;5;10m-------- NET VIRTUA -------- \033[0m\n"
+      print "\n\033[38;5;10m-------- NET COMBO -------- \033[0m\n"
 
       client = ""; refm = ""; duedate = ""; value = ""; line = ""
 
