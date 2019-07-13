@@ -1,0 +1,24 @@
+[Added Associations]
+application/octet-stream=org.kde.kate.desktop;
+application/sql=notepadqq.desktop;
+image/png=org.kde.gwenview.desktop;
+text/*=org.kde.kate.desktop;
+text/plain=notepadqq.desktop;org.kde.kate.desktop;
+video/x-matroska=mpv.desktop;vlc-4.desktop;
+video/x-ms-wmv=vlc-3.desktop;
+video/x-msvideo=vlc.desktop;
+
+[Default Applications]
+#text/plain=notepadqq.desktop;
+#text/x-nfo=org.kde.kate.desktop;
+application/sql=nvim.desktop
+application/zip=org.kde.ark.desktop
+text/plain=nvim.desktop
+text/x-nfo=nvim.desktop
+video/avi=mpv.desktop
+video/mp4=mpv.desktop
+video/x-matroska=mpv.desktop;
+video/x-ms-wmv=vlc-3.desktop;
+video/x-msvideo=mpv.desktop
+x-scheme-handler/magnet=org.qbittorrent.qBittorrent.desktop
+x-scheme-handler/mailto=google-chrome.desktop

@@ -14,8 +14,8 @@ map <leader>es ;sp %%
 map <leader>ev ;vsp %%
 map <leader>et ;tabe %%
 
-" remap :MarkClear to leader n
-autocmd VimEnter * noremap <leader>n :MarkClear<cr>
+nmap <Leader>M <Plug>MarkToggle
+nmap <Leader>N <Plug>MarkConfirmAllClear
 
 nnoremap <leader>zz :call rods#funcs#VCenterCursor()<CR>
 

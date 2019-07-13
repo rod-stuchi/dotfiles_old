@@ -9,18 +9,21 @@ case `uname` in
     export ANDROID_HOME=~/Library/Android/sdk/
   ;;
   Linux)
-    export ANDROID_HOME=/disks/1TB/android/android-sdk
+    export ANDROID_HOME=/disks/1TB/android
   ;;
 esac
-
-[ -d ~/.asdf/installs/nodejs/8.9.4/.npm/bin ]       && export PATH=~/.asdf/installs/nodejs/8.9.4/.npm/bin:$PATH
+# ================================= ANDROID =================================
+[ -d $ANDROID_HOME/sdk/bin ]                        && export PATH=$PATH:$ANDROID_HOME/sdk/bin
 [ -d $ANDROID_HOME/tools ]                          && export PATH=$PATH:$ANDROID_HOME/tools
 [ -d $ANDROID_HOME/platform-tools ]                 && export PATH=$PATH:$ANDROID_HOME/platform-tools
+# =================================== RUBY ==================================
 [ -d $HOME/.rvm/bin ]                               && export PATH="$PATH:$HOME/.rvm/bin"
-[ -d $HOME/.config/yarn/global/node_modules/.bin ]  && export PATH="$PATH:$HOME/.config/yarn/global/node_modules/.bin"
-# $ yarnn global bin
-[ -d $HOME/.asdf/installs/nodejs/8.9.4/.npm/bin ]   && export PATH="$PATH:$HOME/.asdf/installs/nodejs/8.9.4/.npm/bin"
 [ -d $HOME/.gem/ruby/2.5.0/bin ]                    && export PATH="$PATH:$HOME/.gem/ruby/2.5.0/bin"
+# =================================== NODE ==================================
+[ -d ~/.asdf/installs/nodejs/8.9.4/.npm/bin ]       && export PATH=~/.asdf/installs/nodejs/8.9.4/.npm/bin:$PATH
+[ -d $HOME/.config/yarn/global/node_modules/.bin ]  && export PATH="$PATH:$HOME/.config/yarn/global/node_modules/.bin"
+[ -d $HOME/.asdf/installs/nodejs/8.9.4/.npm/bin ]   && export PATH="$PATH:$HOME/.asdf/installs/nodejs/8.9.4/.npm/bin"
+
 [ -x "$(command -v rg)" ]                           && export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
 
 export MANPAGER="nvim -c 'set ft=man' -"
@@ -42,7 +45,6 @@ ZSH_THEME="robbyrussell"
 
 plugins=(
   adb
-  archlinux
   bundler
   colorize
   dirhistory
@@ -100,6 +102,9 @@ if [ -d $ANDROID_HOME/emulator ]; then
 fi
 alias ggit="/usr/bin/git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 alias gitroot="/usr/bin/git --git-dir=/home/rods/.gitroot --work-tree=/"
+alias gllog="git log --pretty=\"format:%C(auto,yellow)%h%C(auto,magenta)% G? %C(auto,blue)%>(12,trunc)%ad %C(auto,green)%<(17,trunc)%aN%C(auto,reset)%s%C(auto,red)\""
+alias glllog="git log --pretty=\"format:%C(auto,yellow)%h%C(auto,magenta)% G? %C(auto,blue)%>(12,trunc)%ad %C(auto,green)%<(17,trunc)%aN%C(auto,reset)%s%C(auto,red)% gD% D\""
+alias gtr="git --no-pager tag --sort=-creatordate"
 alias ld="ls -d */"
 alias lld="ls -ld */"
 
@@ -116,6 +121,7 @@ if [ -d ~/.scripts ]; then
   alias rodsSubmarinoFatura='~/.scripts/submarino/fatura'
   alias xmovsub="~/.scripts/xmovsub.sh"
   alias xmovdir="~/.scripts/xmovdir.sh"
+  alias mega-sena="~/.scripts/mega-sena/mega-sena.js"
 fi
 
 if [[ `uname` == "Linux" ]] then
@@ -144,7 +150,7 @@ if [[ `uname` == "Linux" ]] then
     [[ ! -z $1 ]] && VOLP=$1
     VOLV=$(($VOLP * 65530 / 100))
     # ref link: https://askubuntu.com/a/829996
-    while sleep 0.02; do pacmd set-source-volume alsa_input.pci-0000_00_1b.0.analog-stereo $VOLV; done
+    while sleep 0.001; do pacmd set-source-volume alsa_input.pci-0000_00_1b.0.analog-stereo $VOLV; done
   }
 
   rodsColor () {
@@ -160,6 +166,21 @@ if [[ `uname` == "Linux" ]] then
     echo "~/.config/nvim/init.vim ::"
     cat ~/.config/nvim/init.vim | tail -n +153 | head -8 | sed -e 's/^/          /g'
   }
+
+  rodsCreateFile () {
+    if [[ -z $1 || -z $2 ]]; then
+    echo 'usage:
+      rodsCreateFile name size
+        name  - any string without spaces
+        size  - in MB
+
+      $ rodsCreateFile file.txt 10
+    '
+    return 0
+    fi
+    dd if=/dev/urandom of=$1 bs=1048576 count=$2
+  }
+
   # get total usage memory em MB by process name, like chrome, vim, etc
   memusage() {
     t=0;
@@ -215,7 +236,7 @@ if [[ `uname` == "Linux" ]] then
   # cat /sys/class/power_supply/BAT0/power_now | awk '{print $1*10^-6 " W"}'
 fi
 
-alias rodsFindDup="find . -type f -print0 | xargs -0 sha1sum | sort | uniq -w32 --all-repeated=separate"
+alias rodsFindDup="fd -tf . --print0 | xargs -0 sha1sum | sort | uniq -w40 --all-repeated=separate"
 alias rodsvideo-720p="youtube-dl -f 'bestvideo[height<=720]+bestaudio/best[height<=720]' --merge-output-format mkv -o '%(title)s.[ac.%(acodec)s].[vc.%(vcodec)s].%(ext)s' "
 alias rodsvideo-1080p="youtube-dl -f 'bestvideo[height<=1080]+bestaudio/best[height<=1080]' --merge-output-format mkv -o '%(title)s.[ac.%(acodec)s].[vc.%(vcodec)s].%(ext)s' "
 alias vim="nvim"
@@ -334,12 +355,21 @@ fbr() {
 # (including remote branches), sorted by most recent commit, limit 30 last branches
 fco() {
   local tags branches target
-  tags=$(
-    git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
-  branches=$(
-    git branch --all | grep -v HEAD             |
-    sed "s/.* //"    | sed "s#remotes/[^/]*/##" |
-    sort -u          | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
+  if [[ $1 = "-h" || $1 = "--help" ]]; then
+    printf "usage: fco {args}\n\targs:\n"
+    printf "\t%-17s \x1b[3 %s \x1b[0m\n" "--tags, -t" " include 'git tags' in result list"
+    printf "\t%-17s \x1b[3 %s \x1b[0m\n" "--help, -h" " show this help"
+    return 0
+  fi
+  if [[ $1 = "--tags" || $1 = "-t" ]]; then
+    tags=$(git tag | awk '{print "\x1b[31;1mtag\x1b[m\t" $1}') || return
+  fi
+
+  branches=$(git branch --all --sort=-committerdate \
+    | grep "remotes/" | grep -v HEAD \
+    | sed 's/.* //' | sed "s#remotes/[^/]*/##" \
+    | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}'
+  ) || return
   target=$(
     (echo "$tags"; echo "$branches") |
     fzf-tmux --reverse -l30 -- --no-hscroll --ansi +m -d "\t" -n 2) || return
@@ -507,6 +537,14 @@ pdfrange() {
 dec2hexTrans () {
   value=$( [[ -z $1 ]] && echo "50" || echo $1 )
   printf '%X\n' $(($value  * 255 / 100))
+}
+
+monitorNoteOff () {
+  xrandr --output LVDS-0 --off; xrandr --output HDMI-0 --primary
+}
+
+monitorNoteOn () {
+  xrandr --output LVDS-0 --auto; xrandr --output HDMI-0 --primary
 }
 
 # https://unix.stackexchange.com/questions/106375/make-zsh-alt-f-behave-like-emacs-alt-f

@@ -88,31 +88,35 @@ set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz
 
 " ===================================== vim-plug ===================================
 call plug#begin('~/.local/share/nvim/plugged')
-  " Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
+  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   " Plug 'chriskempson/base16-vim'
   " Plug 'dhruvasagar/vim-table-mode'
   " Plug 'dhruvasagar/vim-vinegar' " for nerdtree
   " Plug 'fleischie/vim-styled-components'
+  " Plug 'ludovicchabant/vim-gutentags'
+  " Plug 'neomake/neomake'
+
+  Plug 'AndrewRadev/tagalong.vim'
   Plug 'Asheq/close-buffers.vim'
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'SirVer/ultisnips'
   Plug 'airblade/vim-gitgutter'
+  Plug 'amadeus/vim-jsx'
   Plug 'ctrlpvim/ctrlp.vim'
   Plug 'easymotion/vim-easymotion'
   Plug 'elixir-lang/vim-elixir'
   Plug 'guns/xterm-color-table.vim'
+  Plug 'inkarkat/vim-ingo-library'
+  Plug 'inkarkat/vim-mark'
   Plug 'joshdick/onedark.vim'
   Plug 'junegunn/fzf', { 'dir': '~/.config/fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
   Plug 'junegunn/vim-easy-align'
   Plug 'justinj/vim-react-snippets'
   Plug 'justinmk/vim-sneak'
-  Plug 'ludovicchabant/vim-gutentags'
   Plug 'machakann/vim-highlightedyank'
   Plug 'mattn/emmet-vim'
   Plug 'maxmellon/vim-jsx-pretty'
-  Plug 'mxw/vim-jsx'
-  Plug 'neomake/neomake'
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'pangloss/vim-javascript'
   Plug 'ryanoasis/vim-devicons'
   Plug 'scrooloose/nerdtree', " { 'on': 'NERDTreeToggle' }
@@ -124,9 +128,8 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'tpope/vim-surround'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
-  Plug 'vim-scripts/Mark--Karkat'
+  Plug 'w0rp/ale'
 call plug#end()
-
 
 " ====================================== themes ====================================
 let g:onedark_terminal_italics = 1
@@ -144,24 +147,9 @@ autocmd FileType git set nofoldenable
 " save cursor/scroll position when switching between buffers
 autocmd! BufWinLeave * let b:winview = winsaveview()
 autocmd! BufWinEnter * if exists('b:winview') | call winrestview(b:winview) | unlet b:winview
+
 " Makefiles require tabs
 autocmd FileType make setlocal noexpandtab
-
-" let g:LanguageClient_serverCommands = {
-"     \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-"     \ 'javascript': ['javascript-typescript-stdio'],
-"     \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
-"     \ 'python': ['pyls'],
-"     \ }
-
-" :LanguageClientStart "to start using
-
-" nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-" " Or map each action separately
-" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-" nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-" nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
-
 
 " Remove diacritical signs from characters in specified range of lines.
 " Examples of characters replaced: á -> a, ç -> c, Á -> A, Ç -> C.

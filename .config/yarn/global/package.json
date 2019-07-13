@@ -1,16 +1,19 @@
 {
   "dependencies": {
     "babel-watch": "^2.0.7",
-    "bower": "^1.8.4",
     "browser-sync": "^2.23.6",
     "cnpj-cli": "^1.1.0",
     "create-react-app": "^1.5.2",
     "create-react-native-app": "^2.0.2",
+    "csvtojson": "^2.0.8",
     "depcheck": "^0.6.8",
     "emoj": "^2.0.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-prettier": "^3.1.0",
     "insect": "^5.0.0",
     "js.inspect": "^0.0.13",
     "local-web-server": "^2.6.0",
+    "neovim": "^4.5.0",
     "node-cpf-cli": "^1.0.3",
     "node-gyp": "^3.6.2",
     "nodemon": "^1.14.11",
@@ -18,9 +21,10 @@
     "nyc": "^11.2.1",
     "oid-cli": "^1.0.0",
     "pm2": "^2.10.1",
+    "prettier": "^1.16.4",
     "react-create-app": "^2.0.6",
     "react-native-cli": "^2.0.1",
-    "tldr": "^3.2.1",
+    "tldr": "^3.2.7",
     "vue-cli": "^2.9.2",
     "yo": "^2.0.1"
   }

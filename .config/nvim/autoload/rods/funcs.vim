@@ -18,19 +18,23 @@ function! rods#funcs#linewidth ()
   " highlight before 100 characters
   " https://stackoverflow.com/a/235970/6785523
   highlight OverLength ctermbg=52 guibg=#28342a
-  match OverLength /\%101v.\+/
+  matchadd('OverLength', '\%101v.\+')
 endfunction
 
 function! rods#funcs#linewidth2 ()
   highlight ColorColumn ctermbg=magenta guibg=#b41158
-  match ColorColumn /\%101v/
+  " match does not work if has more than one
+  " match ColorColumn /\%80v/
+  call matchadd('ColorColumn', '\%80v')
 endfunction
 
 " more colors
 " http://vim.wikia.com/wiki/Xterm256_color_names_for_console_Vim
 function! rods#funcs#highlights ()
   highlight breakSpace ctermfg=46 guifg=#00ff00
-  match breakSpace /\%xa0/
+  " match does not work if has more than one
+  " match breakSpace /\%xa0/
+  call matchadd('breakSpace', '\%xa0')
 endfunction
 
 function! rods#funcs#ToggleMouse()
