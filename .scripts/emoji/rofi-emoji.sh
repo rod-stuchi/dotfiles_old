@@ -1,7 +1,7 @@
 #! /bin/sh
 
 emoji=`
-  rg -v "#$|^#" ~/.scripts/emoji/emojis-full \
+  rg -v "#$|^#" ~/.scripts/emoji/emojis-full-2 \
   | rofi -i -matching regex -dmenu -location 0 \
     -no-disable-history \
     -cache-dir ~/.scripts/emoji/.rofi-cache \
@@ -12,7 +12,7 @@ emoji=`
 `
 
 if [[ ! -z $emoji ]]; then
-  xclip -sel clip <<< $emoji
+  printf "%s" $emoji | xclip -sel clip
   pgrep -x dunst >/dev/null && notify-send "[$(xclip -o -selection clipboard)] copied."
 fi
 
