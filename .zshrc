@@ -26,6 +26,12 @@ esac
 
 [ -x "$(command -v rg)" ]                           && export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
 
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv 1> /dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+
 export MANPAGER="nvim -c 'set ft=man' -"
 export EDITOR=nvim
 export LC_ALL=en_US.UTF-8
@@ -110,6 +116,7 @@ alias lld="ls -ld */"
 
 if [ -d ~/.scripts ]; then
   alias rodsAmexFatura='~/.scripts/amex/fatura'
+  alias rodsVivoDec='~/.scripts/vivo/decrypt'
   alias rodsComGasDec='~/.scripts/comgas/decrypt'
   alias rodsComGasFatura='~/.scripts/comgas/fatura'
   alias rodsCpAll='~/.scripts/comprovantes/all'
@@ -206,6 +213,14 @@ if [[ `uname` == "Linux" ]] then
 
   dockerstatus() {
     docker ps | awk '{if(NR>1) print $NF}'| xargs docker stats
+  }
+
+  dockerip() {
+    for d in $(docker ps --format '{{.Names}}')
+    do
+      ip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $d)
+      printf "%s : %s\n" $d $ip
+    done
   }
 
   copy(){ echo -n "$1" | xclip -selection clipboard }

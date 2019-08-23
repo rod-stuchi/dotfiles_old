@@ -123,9 +123,10 @@ bindsym $mod+c move absolute position center
 # center YouTube floating
 bindsym $mod+F12 resize set 500 px 291 px, move absolute position center
 bindsym $mod+F11 resize set 1200 px 670 px, move absolute position center
-
 # turn on monitor (notebook)
 bindsym $mod+F10 exec sh -c "xrandr --output LVDS-0 --auto && xrandr --output HDMI-0 --primary"
+# copy to clipboard random emoji
+bindsym $mod+F9 exec sh -c "~/.scripts/emoji/choice-clip.sh"
 
 # workspace variables
 set $workspace1 "1: "
@@ -306,4 +307,4 @@ exec_always feh --bg-scale ~/.config/i3/pictures/9gc8t3eza0c11.png
 #exec compton -f
 
 # need a restart to apply dpi configuration
-exec i3-msg restart
+# exec i3-msg restart

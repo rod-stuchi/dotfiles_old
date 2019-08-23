@@ -25,7 +25,7 @@ function! rods#funcs#linewidth2 ()
   highlight ColorColumn ctermbg=magenta guibg=#b41158
   " match does not work if has more than one
   " match ColorColumn /\%80v/
-  call matchadd('ColorColumn', '\%80v')
+  call matchadd('ColorColumn', '\%88v')
 endfunction
 
 " more colors

@@ -140,7 +140,7 @@ colorscheme onedark
 
 " ===================================== autocmds ===================================
 autocmd FileType vim,zsh,bash silent! call rods#funcs#fold_comments()
-autocmd FileType javascript,elixir call rods#funcs#linewidth2()
+autocmd FileType javascript,elixir,python call rods#funcs#linewidth2()
 autocmd FileType * call rods#funcs#highlights()
 autocmd FileType git set nofoldenable
 

@@ -22,3 +22,4 @@ video/x-ms-wmv=vlc-3.desktop;
 video/x-msvideo=mpv.desktop
 x-scheme-handler/magnet=org.qbittorrent.qBittorrent.desktop
 x-scheme-handler/mailto=google-chrome.desktop
+x-scheme-handler/webcal=google-chrome.desktop
