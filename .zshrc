@@ -9,20 +9,25 @@ case `uname` in
     export ANDROID_HOME=~/Library/Android/sdk/
   ;;
   Linux)
-    export ANDROID_HOME=/disks/1TB/android
+    # export ANDROID_HOME=/disks/1TB/android
+    export ANDROID_SDK_ROOT=/disks/1TB/android
   ;;
 esac
 # ================================= ANDROID =================================
-[ -d $ANDROID_HOME/sdk/bin ]                        && export PATH=$PATH:$ANDROID_HOME/sdk/bin
-[ -d $ANDROID_HOME/tools ]                          && export PATH=$PATH:$ANDROID_HOME/tools
-[ -d $ANDROID_HOME/platform-tools ]                 && export PATH=$PATH:$ANDROID_HOME/platform-tools
+# ANDROID_SDK_ROOT
+# [ -d $ANDROID_HOME/sdk/bin ]                        && export PATH=$PATH:$ANDROID_HOME/sdk/bin
+# [ -d $ANDROID_HOME/tools ]                          && export PATH=$PATH:$ANDROID_HOME/tools
+# [ -d $ANDROID_HOME/platform-tools ]                 && export PATH=$PATH:$ANDROID_HOME/platform-tools
+[ -d $ANDROID_SDK_ROOT/sdk/bin ]                      && export PATH=$PATH:$ANDROID_SDK_ROOT/sdk/bin
+[ -d $ANDROID_SDK_ROOT/tools ]                        && export PATH=$PATH:$ANDROID_SDK_ROOT/tools
+[ -d $ANDROID_SDK_ROOT/platform-tools ]               && export PATH=$PATH:$ANDROID_SDK_ROOT/platform-tools
 # =================================== RUBY ==================================
 [ -d $HOME/.rvm/bin ]                               && export PATH="$PATH:$HOME/.rvm/bin"
 [ -d $HOME/.gem/ruby/2.5.0/bin ]                    && export PATH="$PATH:$HOME/.gem/ruby/2.5.0/bin"
 # =================================== NODE ==================================
-[ -d ~/.asdf/installs/nodejs/8.9.4/.npm/bin ]       && export PATH=~/.asdf/installs/nodejs/8.9.4/.npm/bin:$PATH
+# [ -d ~/.asdf/installs/nodejs/8.9.4/.npm/bin ]       && export PATH=~/.asdf/installs/nodejs/8.9.4/.npm/bin:$PATH
 [ -d $HOME/.config/yarn/global/node_modules/.bin ]  && export PATH="$PATH:$HOME/.config/yarn/global/node_modules/.bin"
-[ -d $HOME/.asdf/installs/nodejs/8.9.4/.npm/bin ]   && export PATH="$PATH:$HOME/.asdf/installs/nodejs/8.9.4/.npm/bin"
+# [ -d $HOME/.asdf/installs/nodejs/8.9.4/.npm/bin ]   && export PATH="$PATH:$HOME/.asdf/installs/nodejs/8.9.4/.npm/bin"
 
 [ -x "$(command -v rg)" ]                           && export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
 
@@ -77,8 +82,8 @@ plugins=(
 export KEYTIMEOUT=1
 
 source $ZSH/oh-my-zsh.sh
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
+# . $HOME/.asdf/asdf.sh
+# . $HOME/.asdf/completions/asdf.bash
 
 if [[ `uname` == "Linux" ]] then
   if [[ $TERM =~ konsole.* ]]; then
@@ -117,6 +122,7 @@ alias lld="ls -ld */"
 if [ -d ~/.scripts ]; then
   alias rodsAmexFatura='~/.scripts/amex/fatura'
   alias rodsVivoDec='~/.scripts/vivo/decrypt'
+  alias rodsClaroDec='~/.scripts/claro/decrypt'
   alias rodsComGasDec='~/.scripts/comgas/decrypt'
   alias rodsComGasFatura='~/.scripts/comgas/fatura'
   alias rodsCpAll='~/.scripts/comprovantes/all'
@@ -569,6 +575,10 @@ monitorNoteOn () {
 
 bindkey -M vicmd "k" up-line-or-beginning-search
 bindkey -M vicmd "j" down-line-or-beginning-search
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

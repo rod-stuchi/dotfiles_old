@@ -118,6 +118,9 @@ call plug#begin('~/.local/share/nvim/plugged')
   Plug 'maxmellon/vim-jsx-pretty'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'pangloss/vim-javascript'
+  Plug 'prettier/vim-prettier', {
+    \ 'do': 'yarn install',
+    \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
   Plug 'ryanoasis/vim-devicons'
   Plug 'scrooloose/nerdtree', " { 'on': 'NERDTreeToggle' }
   Plug 'slashmili/alchemist.vim'
